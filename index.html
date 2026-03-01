@@ -1,0 +1,2652 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="appHtml" data-theme="dark">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#ddd0a8">
+<title>ALTANTAWY Comparison Tool v2.5 — Valy Al Madina Hotel</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ── White / Silver palette ── */
+    --bg: #f2f4f8;
+    --bg2: #e8eaf0;
+    --surface: rgba(255, 255, 255, 0.85);
+    --surface2: rgba(245, 247, 252, 0.70);
+    --border: rgba(160, 170, 200, 0.30);
+    --border2: rgba(160, 170, 200, 0.15);
+    --accent: #3a3f5c;
+    --accent-mid: #5a6080;
+    --accent-light: #8890b0;
+    --accent-glow: rgba(90, 96, 128, 0.12);
+    --teal: #1a7a7a;
+    --teal-light: #2a9d9d;
+    --green: #1a6b3a;
+    --red: #9b2020;
+    --yellow: #7a6010;
+    --purple: #5a1a7a;
+    --text: #1a1d2e;
+    --text2: #3a3f5c;
+    --muted: #7a80a0;
+    --muted2: #a0a8c0;
+    --shadow: 0 4px 20px rgba(60, 70, 120, 0.10), 0 1px 4px rgba(40, 50, 100, 0.07);
+    --shadow-hover: 0 8px 32px rgba(60, 70, 120, 0.16), 0 2px 8px rgba(40, 50, 100, 0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { transition: background-color 0.25s ease, border-color 0.25s ease, color 0.20s ease, box-shadow 0.20s ease; }
+
+  body {
+    background-color: #0d1b3e;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(0,200,255,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 0% 60%, rgba(0,120,255,0.14) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 40%, rgba(80,0,200,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(0,60,180,0.20) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='320' viewBox='0 0 1440 320'%3E%3Cpath fill='%2300c8ff' fill-opacity='0.04' d='M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,186.7C960,213,1056,235,1152,224C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='320' viewBox='0 0 1440 320'%3E%3Cpath fill='%230080ff' fill-opacity='0.05' d='M0,256L60,240C120,224,240,192,360,186.7C480,181,600,203,720,208C840,213,960,203,1080,181.3C1200,160,1320,128,1380,112L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E"),
+      linear-gradient(160deg, #07090f 0%, #0a0f1e 40%, #080c1a 70%, #06090f 100%);
+    background-size: cover, cover, cover, cover, 100% 45%, 100% 35%, cover;
+    background-position: center, center, center, center, bottom, bottom, center;
+    background-repeat: no-repeat;
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    padding: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 16px;
+    padding: 20px 24px 16px;
+    position: relative;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,247,255,0.92) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(160,170,200,0.35);
+    border-top: 3px solid #5a6080;
+    box-shadow: var(--shadow);
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #8890b0, #5a6080, #8890b0, transparent);
+    border-radius: 16px 16px 0 0;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #8890b0, transparent);
+  }
+
+  h1 { font-size: 1.6rem; font-weight: 700; color: var(--accent); letter-spacing: -0.3px; }
+  h1 span { color: var(--teal); }
+  .subtitle { color: var(--muted); font-size: 0.78rem; margin-top: 4px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1.2px; text-transform: uppercase; }
+
+  .top-actions { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 16px; }
+  .btn-clear {
+    background: rgba(255,248,220,0.8);
+    border: 1px solid rgba(155, 32, 32, 0.45);
+    color: var(--red);
+    border-radius: 8px; padding: 7px 16px; font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; font-family: inherit; transition: all .2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .btn-clear:hover { background: rgba(155,32,32,0.10); }
+
+  .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  @media(max-width:700px) { .upload-grid { grid-template-columns: 1fr; } }
+
+  .upload-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(245,247,255,0.88) 100%);
+    border: 1px solid rgba(160,170,200,0.35);
+    border-top: 2px solid rgba(130,140,180,0.55);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    transition: box-shadow .2s;
+  }
+  .upload-card:hover { box-shadow: var(--shadow-hover); }
+
+  .card-label { font-size: 0.68rem; font-family: 'IBM Plex Mono', monospace; color: var(--teal); text-transform: uppercase; letter-spacing: 1.4px; margin-bottom: 5px; font-weight: 600; }
+  .card-title { font-size: 0.92rem; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+
+  .file-slots { display: flex; flex-direction: column; gap: 6px; }
+  .file-slot {
+    background: rgba(245,247,252,0.70);
+    border: 1.5px dashed rgba(130,140,180,0.40);
+    border-radius: 8px; padding: 8px 11px; display: flex; align-items: center; gap: 9px;
+    transition: all .2s; cursor: pointer;
+  }
+  .file-slot:hover, .file-slot.dragover { border-color: var(--accent-mid); background: var(--accent-glow); }
+  .file-slot input[type="file"] { display: none; }
+  .slot-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .slot-info { flex: 1; min-width: 0; }
+  .slot-label { font-size: 0.72rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .slot-name { font-size: 0.75rem; color: var(--accent); font-family: 'IBM Plex Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; display: none; }
+  .slot-name.visible { display: block; }
+  .remove-slot { background: transparent; border: none; color: var(--muted2); cursor: pointer; font-size: .9rem; padding: 2px 4px; border-radius: 4px; transition: color .2s; flex-shrink: 0; }
+  .remove-slot:hover { color: var(--red); }
+
+  .add-file-btn {
+    background: rgba(245,247,252,0.60);
+    border: 1px dashed rgba(130,140,180,0.40);
+    color: var(--muted); border-radius: 7px; padding: 6px 10px; font-size: 0.74rem;
+    cursor: pointer; transition: all .2s; margin-top: 5px; font-family: inherit;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .add-file-btn:hover { border-color: var(--accent-mid); color: var(--accent); background: var(--accent-glow); }
+
+  .paste-lbl { font-size: 0.68rem; color: var(--muted); margin: 8px 0 4px; }
+  textarea.paste-box {
+    width: 100%; height: 60px;
+    background: rgba(255,248,220,0.65);
+    border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text); padding: 7px 9px; font-size: 0.73rem;
+    font-family: 'IBM Plex Mono', monospace; resize: vertical; outline: none; transition: all .2s;
+  }
+  textarea.paste-box:focus { border-color: var(--accent-mid); box-shadow: 0 0 0 3px var(--accent-glow); }
+  textarea.paste-box::placeholder { color: var(--muted2); }
+
+  .compare-btn {
+    display: block; width: 100%; padding: 13px;
+    background: linear-gradient(135deg, #8890b0 0%, #5a6080 50%, #3a3f5c 100%);
+    color: #fff; border: none; border-radius: 10px;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer; letter-spacing: .6px;
+    transition: all .2s; font-family: inherit; margin-bottom: 18px;
+    box-shadow: 0 4px 18px rgba(60, 70, 120, 0.30), 0 1px 4px rgba(0,0,0,0.12);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.20);
+  }
+  .compare-btn:hover {
+    background: linear-gradient(135deg, #a0a8c8 0%, #6a7090 50%, #4a5070 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 7px 28px rgba(60,70,120,0.40);
+  }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 14px; }
+  @media(max-width:580px) { .stats { grid-template-columns: repeat(3,1fr); } }
+  .stat {
+    background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(245,247,255,0.88));
+    border: 1px solid rgba(160,170,200,0.30);
+    border-radius: 10px; padding: 8px 10px; text-align: center;
+    cursor: pointer; transition: all .2s; user-select: none;
+    box-shadow: var(--shadow);
+  }
+  .stat:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+  .stat.active-stat { border-color: var(--accent-mid); box-shadow: 0 0 0 2px var(--accent-glow), var(--shadow); }
+  .s-total.active-stat { border-color: var(--accent-mid); }
+  .s-match.active-stat { border-color: var(--green); box-shadow: 0 0 0 2px rgba(26,107,58,0.15); }
+  .s-diff.active-stat { border-color: var(--yellow); box-shadow: 0 0 0 2px rgba(154,112,32,0.18); }
+  .s-nohotel.active-stat { border-color: var(--red); box-shadow: 0 0 0 2px rgba(155,32,32,0.15); }
+  .s-nosys.active-stat { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(26,122,122,0.15); }
+  .stat .num { font-size: 1.45rem; font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
+  .stat .lbl { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; margin-top: 2px; }
+  .s-total .num { color: var(--accent); }
+  .s-match .num { color: var(--green); }
+  .s-diff .num { color: var(--yellow); }
+  .s-nohotel .num { color: var(--red); }
+  .s-nosys .num { color: var(--teal); }
+
+  .filter-bar { display: none; }
+
+  .search-box {
+    width: 100%;
+    background: rgba(255,255,255,0.82);
+    border: 1px solid rgba(160,170,200,0.30);
+    border-radius: 8px; padding: 8px 12px; color: var(--text);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.81rem; margin-bottom: 11px;
+    outline: none; transition: all .2s;
+    box-shadow: 0 1px 4px rgba(60,70,120,0.06);
+  }
+  .search-box:focus { border-color: var(--accent-mid); box-shadow: 0 0 0 3px var(--accent-glow); }
+  .search-box::placeholder { color: var(--muted2); }
+
+  .search-count { font-size: 0.72rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-bottom: 8px; display: none; }
+  .search-count.visible { display: block; }
+
+  .section-hdr { display: flex; align-items: center; gap: 9px; margin: 16px 0 8px; padding-bottom: 7px; border-bottom: 1px solid rgba(160,170,200,0.28); }
+  .section-hdr h3 { font-size: 0.78rem; font-family: 'IBM Plex Mono', monospace; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; }
+  .sdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .sd-match { background: var(--green); }
+  .sd-diff { background: var(--yellow); }
+  .sd-nohotel { background: var(--red); }
+  .sd-nosys { background: var(--teal); }
+
+  .result-item {
+    background: linear-gradient(145deg, rgba(255,255,255,0.90), rgba(245,247,255,0.85));
+    border: 1px solid rgba(160,170,200,0.30);
+    border-radius: 10px; margin-bottom: 6px; overflow: hidden;
+    transition: all .2s;
+    box-shadow: 0 2px 10px rgba(60,70,120,0.07);
+  }
+  .result-item:hover { box-shadow: var(--shadow-hover); }
+  .st-match { border-left: 3px solid var(--green); }
+  .st-diff { border-left: 3px solid var(--yellow); }
+  .st-nohotel { border-left: 3px solid var(--red); }
+  .st-nosys { border-left: 3px solid var(--teal); }
+
+  .result-header { display: flex; align-items: center; gap: 9px; padding: 9px 13px; cursor: pointer; user-select: none; }
+  .rsv-num { font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 0.85rem; color: var(--accent); min-width: 76px; }
+  .rsv-copy-btn {
+    background: transparent;
+    border: 1px solid rgba(160,170,200,0.35);
+    border-radius: 5px;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.72rem;
+    padding: 2px 6px;
+    line-height: 1;
+    transition: all .18s;
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .rsv-copy-btn:hover { color: var(--accent); border-color: var(--accent-mid); background: var(--accent-glow); }
+  .rsv-copy-btn.copied { color: var(--green); border-color: var(--green); background: rgba(26,107,58,0.08); }
+  .guest-name { flex: 1; font-size: 0.83rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .htl-tag { font-size: 0.65rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; white-space: nowrap; flex-shrink: 0; }
+  .badge { font-size: 0.65rem; font-weight: 700; padding: 3px 8px; border-radius: 9px; white-space: nowrap; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: .4px; flex-shrink: 0; }
+  .bd-match { background: rgba(26,107,58,.12); color: var(--green); border: 1px solid rgba(26,107,58,.25); }
+  .bd-diff { background: rgba(154,112,32,.12); color: var(--yellow); border: 1px solid rgba(154,112,32,.25); }
+  .bd-nohotel { background: rgba(155,32,32,.12); color: var(--red); border: 1px solid rgba(155,32,32,.25); }
+  .bd-nosys { background: rgba(26,122,122,.12); color: var(--teal); border: 1px solid rgba(26,122,122,.25); }
+
+  .chevron { color: var(--muted); transition: transform .2s; font-size: 0.72rem; flex-shrink: 0; }
+  .result-item.open .chevron { transform: rotate(180deg); }
+  .result-body { padding: 0 13px 11px; border-top: 1px solid rgba(160,170,200,0.18); display: none; background: rgba(245,247,255,0.40); }
+  .result-item.open .result-body { display: block; }
+
+  table.ctbl { width: 100%; border-collapse: collapse; margin-top: 9px; font-size: 0.78rem; }
+  .ctbl th { text-align: left; color: var(--muted); font-weight: 500; padding: 5px 9px; font-family: 'IBM Plex Mono', monospace; font-size: 0.69rem; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid rgba(160,170,200,0.25); background: rgba(160,170,200,0.06); }
+  .ctbl td { padding: 6px 9px; border-bottom: 1px solid rgba(160,170,200,0.10); color: var(--text2); }
+  .ctbl tr:last-child td { border-bottom: none; }
+  .v-ok { color: var(--green); font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+  .v-diff { color: var(--yellow); font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+  .v-na { color: var(--muted2); font-family: 'IBM Plex Mono', monospace; font-style: italic; }
+  .alert-msg { font-size: 0.79rem; padding: 9px 0 2px; font-family: 'IBM Plex Mono', monospace; line-height: 1.6; }
+  .alert-msg.red { color: var(--red); }
+  .alert-msg.purple { color: var(--teal); }
+  .meta-row { font-size: 0.72rem; color: var(--muted); margin-top: 7px; }
+  .meta-row span { color: var(--text2); }
+
+  .results-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+  .results-title { font-size: 0.87rem; font-weight: 700; color: var(--accent); font-family: 'IBM Plex Mono', monospace; }
+
+  .mismatch-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(90,96,128,.08); border: 1px solid rgba(90,96,128,.28); border-radius: 6px; padding: 3px 9px; font-size: 0.7rem; font-family: 'IBM Plex Mono', monospace; color: var(--accent-mid); cursor: pointer; transition: background .2s; user-select: text; }
+  .mismatch-chip:hover { background: rgba(90,96,128,.15); }
+  .mismatch-chip .copy-icon { font-size: 0.65rem; opacity: .7; }
+
+  /* ── Ignore Mismatch Panel ── */
+  .ignore-panel{background:linear-gradient(145deg,rgba(255,255,255,0.90),rgba(245,247,255,0.86));border:1px solid rgba(160,170,200,0.32);border-left:3px solid rgba(255,152,0,0.70);border-radius:10px;padding:11px 14px;margin-bottom:16px;box-shadow:var(--shadow);}
+  .ignore-panel-hdr{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+  .ignore-panel-title{font-size:0.72rem;font-family:'IBM Plex Mono',monospace;color:#ff9800;text-transform:uppercase;letter-spacing:.8px;font-weight:700;}
+  .ignore-panel-desc{font-size:0.68rem;font-family:'IBM Plex Mono',monospace;color:var(--muted);margin-left:auto;}
+  .ignore-chks{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .ignore-chk-group{display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;}
+  .ignore-chk-group input[type="checkbox"]{display:none;}
+  .ignore-chk-box{width:17px;height:17px;border-radius:4px;border:1.5px solid rgba(255,152,0,0.40);background:rgba(255,152,0,0.06);display:inline-flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+  .ignore-chk-group input:checked + .ignore-chk-box{border-color:#ff9800;background:rgba(255,152,0,0.18);}
+  .ignore-chk-group input:checked + .ignore-chk-box::after{content:'✓';font-size:0.72rem;color:#ff9800;font-weight:700;line-height:1;}
+  .ignore-chk-label{font-size:0.76rem;font-family:'IBM Plex Mono',monospace;color:var(--muted);transition:color .2s;}
+  .ignore-chk-group input:checked ~ .ignore-chk-label{color:#ff9800;}
+  [data-theme="dark"] .ignore-panel{background:#0f1623;border-color:#243347;border-left-color:rgba(255,152,0,0.70);}
+  [data-theme="dark"] .ignore-chk-box{background:rgba(255,152,0,0.06);border-color:rgba(255,152,0,0.30);}
+  [data-theme="dark"] .ignore-chk-group input:checked + .ignore-chk-box{border-color:#ff9800;background:rgba(255,152,0,0.15);}
+  [data-theme="dark"] .ignore-panel-title{color:#ffb74d;}
+
+  /* ── Maybe Compatible Box ── */
+  .maybe-box {
+    margin-top: 10px;
+    border: 1.5px dashed rgba(99, 179, 237, 0.50);
+    border-radius: 8px;
+    padding: 9px 12px;
+    background: rgba(99, 179, 237, 0.05);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .maybe-box-hdr {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    font-size: 0.68rem; color: #63b3ed; text-transform: uppercase; letter-spacing: .7px; font-weight: 700;
+  }
+  .maybe-box-hdr .maybe-icon { font-size: 1rem; }
+  .maybe-candidates { display: flex; flex-direction: column; gap: 6px; }
+  .maybe-candidate {
+    display: flex; align-items: flex-start; gap: 9px;
+    background: rgba(99,179,237,0.06); border: 1px solid rgba(99,179,237,0.20);
+    border-radius: 6px; padding: 7px 10px; cursor: pointer; transition: all .2s;
+  }
+  .maybe-candidate:hover { background: rgba(99,179,237,0.12); border-color: rgba(99,179,237,0.40); }
+  .maybe-candidate.confirmed {
+    background: rgba(0,230,118,0.08); border-color: rgba(0,230,118,0.40);
+    border-style: solid;
+  }
+  .maybe-chk-wrap { flex-shrink: 0; padding-top: 1px; }
+  .maybe-chk {
+    width: 18px; height: 18px; border-radius: 4px; border: 2px solid rgba(99,179,237,0.50);
+    background: transparent; display: inline-flex; align-items: center; justify-content: center;
+    transition: all .2s; cursor: pointer; flex-shrink: 0;
+  }
+  .maybe-candidate.confirmed .maybe-chk {
+    background: rgba(0,230,118,0.18); border-color: #00e676;
+  }
+  .maybe-candidate.confirmed .maybe-chk::after { content: '✓'; font-size: 0.75rem; color: #00e676; font-weight: 700; line-height: 1; }
+  .maybe-info { flex: 1; font-size: 0.73rem; }
+  .maybe-rsv { color: #63b3ed; font-weight: 700; font-size: 0.78rem; }
+  .maybe-candidate.confirmed .maybe-rsv { color: #00e676; }
+  .maybe-details { color: var(--muted); margin-top: 2px; font-size: 0.68rem; }
+  .maybe-score { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
+  .score-tag {
+    font-size: 0.62rem; padding: 1px 6px; border-radius: 4px; font-weight: 600;
+    background: rgba(0,230,118,0.12); color: #00e676; border: 1px solid rgba(0,230,118,0.25);
+  }
+  .score-tag.no { background: rgba(255,71,87,0.10); color: #ff4757; border-color: rgba(255,71,87,0.25); }
+  .confirmed-banner {
+    display: none; align-items: center; gap: 6px; margin-top: 8px;
+    font-size: 0.72rem; color: #00e676; font-family: 'IBM Plex Mono', monospace;
+    padding: 5px 9px; background: rgba(0,230,118,0.07); border-radius: 6px;
+    border: 1px solid rgba(0,230,118,0.20);
+  }
+  .confirmed-banner.visible { display: flex; }
+  [data-theme="dark"] .maybe-box { border-color: rgba(99,179,237,0.30); background: rgba(99,179,237,0.04); }
+  [data-theme="dark"] .maybe-candidate { background: rgba(99,179,237,0.05); border-color: rgba(99,179,237,0.15); }
+  [data-theme="dark"] .maybe-candidate:hover { background: rgba(99,179,237,0.10); border-color: rgba(99,179,237,0.35); }
+  [data-theme="dark"] .maybe-candidate.confirmed { background: rgba(0,230,118,0.07); border-color: rgba(0,230,118,0.30); }
+  [data-theme="dark"] .maybe-details { color: #5a7490; }
+
+  /* Export toolbar */
+  .export-bar {
+    display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; padding: 12px 14px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.90), rgba(245,247,255,0.86));
+    border: 1px solid rgba(160,170,200,0.32);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+  }
+  .export-bar-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .export-bar-label { font-size: 0.7rem; font-family: 'IBM Plex Mono', monospace; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; margin-right: 4px; white-space: nowrap; }
+  .export-btn { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 7px; border: 1px solid rgba(160,170,200,0.35); background: rgba(255,255,255,0.65); color: var(--text2); font-size: 0.78rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all .2s; }
+  .export-btn:hover { border-color: var(--accent-mid); color: var(--accent); background: var(--accent-glow); }
+  .export-btn.excel:hover { border-color: var(--green); color: var(--green); background: rgba(26,107,58,0.08); }
+  .export-btn.img:hover { border-color: var(--teal); color: var(--teal); background: rgba(26,122,122,0.08); }
+  .export-sections-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-top: 8px; border-top: 1px solid rgba(160,170,200,0.20); }
+  .export-sections-label { font-size: 0.65rem; font-family: 'IBM Plex Mono', monospace; color: var(--muted2); text-transform: uppercase; letter-spacing: .7px; white-space: nowrap; }
+  .export-chk-group { display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+  .export-chk-group input[type="checkbox"] { display: none; }
+  .chk-box { width: 15px; height: 15px; border-radius: 4px; border: 1.5px solid rgba(160,170,200,0.40); background: rgba(245,247,252,0.80); display: inline-flex; align-items: center; justify-content: center; transition: all .2s; flex-shrink: 0; }
+  .export-chk-group input:checked + .chk-box { border-color: var(--accent-mid); background: var(--accent-glow); }
+  .export-chk-group input:checked + .chk-box::after { content: '✓'; font-size: 0.65rem; color: var(--accent); font-weight: 700; line-height: 1; }
+  .chk-label { font-size: 0.72rem; font-family: 'IBM Plex Mono', monospace; color: var(--muted); transition: color .2s; }
+  .export-chk-group:hover .chk-label { color: var(--text); }
+  .export-chk-group:hover .chk-box { border-color: var(--muted); }
+  .chk-total .export-chk-group input:checked + .chk-box { border-color: var(--accent-mid); background: var(--accent-glow); }
+  .chk-match input:checked + .chk-box { border-color: var(--green)!important; background: rgba(26,107,58,.12)!important; }
+  .chk-match input:checked + .chk-box::after { color: var(--green)!important; }
+  .chk-nohotel input:checked + .chk-box { border-color: var(--red)!important; background: rgba(155,32,32,.12)!important; }
+  .chk-nohotel input:checked + .chk-box::after { color: var(--red)!important; }
+  .chk-nosys input:checked + .chk-box { border-color: var(--teal)!important; background: rgba(26,122,122,.12)!important; }
+  .chk-nosys input:checked + .chk-box::after { color: var(--teal)!important; }
+  .chk-diff input:checked + .chk-box { border-color: var(--yellow)!important; background: rgba(122,96,16,.12)!important; }
+  .chk-diff input:checked + .chk-box::after { color: var(--yellow)!important; }
+
+  /* ── Smart multi-file drop zone ── */
+  .smart-drop-zone {
+    background: linear-gradient(145deg, rgba(255,255,255,0.90), rgba(245,247,255,0.86));
+    border: 2px dashed rgba(130,140,180,0.40);
+    border-radius: 14px; padding: 0; margin-bottom: 14px; transition: all .25s; position: relative; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .smart-drop-zone.dragover { border-color: var(--accent-mid); background: var(--accent-glow); }
+  .drop-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 24px; text-align: center; }
+  .drop-icon { font-size: 2.2rem; margin-bottom: 10px; }
+  .drop-title { font-size: 0.92rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .drop-link { color: var(--accent); cursor: pointer; text-decoration: underline; }
+  .drop-sub { font-size: 0.75rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-bottom: 8px; }
+  .drop-formats { font-size: 0.68rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; border: 1px solid rgba(160,170,200,0.30); border-radius: 20px; padding: 3px 12px; display: inline-block; background: rgba(245,247,252,0.70); }
+  .file-tags-wrap { padding: 14px 16px 10px; }
+  .file-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .file-tag { display: flex; align-items: center; gap: 7px; background: rgba(245,247,252,0.80); border: 1px solid rgba(160,170,200,0.30); border-radius: 8px; padding: 6px 10px; font-size: 0.74rem; font-family: 'IBM Plex Mono', monospace; }
+  .file-tag.hotel-tag { border-color: rgba(90,96,128,.40); background: rgba(90,96,128,.08); }
+  .file-tag.system-tag { border-color: rgba(26,122,122,.40); background: rgba(26,122,122,.07); }
+  .file-tag.unknown-tag { border-color: rgba(155,32,32,.30); background: rgba(155,32,32,.06); }
+  .tag-type { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; padding: 2px 5px; border-radius: 4px; }
+  .hotel-tag .tag-type { background: rgba(90,96,128,.18); color: var(--accent); }
+  .system-tag .tag-type { background: rgba(26,122,122,.18); color: var(--teal); }
+  .unknown-tag .tag-type { background: rgba(155,32,32,.15); color: var(--red); }
+  .tag-name { color: var(--text); max-width: 180px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tag-rm { background: transparent; border: none; color: var(--muted2); cursor: pointer; font-size: .85rem; padding: 0 2px; line-height: 1; }
+  .tag-rm:hover { color: var(--red); }
+  .add-more-btn { background: rgba(245,247,252,0.65); border: 1px dashed rgba(130,140,180,.38); color: var(--muted); border-radius: 7px; padding: 5px 12px; font-size: 0.74rem; cursor: pointer; transition: all .2s; font-family: inherit; }
+  .add-more-btn:hover { border-color: var(--accent-mid); color: var(--accent); background: var(--accent-glow); }
+  .type-select { background: rgba(245,247,252,0.80); border: 1px solid rgba(160,170,200,0.30); color: var(--text); border-radius: 5px; padding: 2px 6px; font-size: 0.72rem; font-family: 'IBM Plex Mono', monospace; cursor: pointer; margin-left: 4px; }
+
+  /* Arabic / RTL support */
+  html[lang="ar"] body { font-family: 'Cairo', sans-serif; direction: rtl; }
+  html[lang="ar"] .subtitle, html[lang="ar"] .card-label, html[lang="ar"] .slot-label,
+  html[lang="ar"] .results-title, html[lang="ar"] .section-hdr h3 { font-family: 'Cairo', sans-serif; }
+  html[lang="ar"] .upload-grid { direction: rtl; }
+  html[lang="ar"] .top-actions { flex-direction: row-reverse; }
+  html[lang="ar"] .result-header { flex-direction: row-reverse; }
+  html[lang="ar"] .rsv-num { text-align: right; }
+  html[lang="ar"] .filter-bar { direction: rtl; }
+  html[lang="ar"] .export-bar { direction: rtl; }
+  html[lang="ar"] .stats { direction: rtl; }
+
+  /* Lang toggle button */
+  .lang-btn {
+    background: rgba(245,247,252,0.85);
+    border: 1px solid rgba(26,122,122,0.45);
+    color: var(--teal);
+    border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; font-weight: 700;
+    cursor: pointer; font-family: inherit; transition: all .2s; letter-spacing: .5px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .lang-btn:hover { background: rgba(26,122,122,0.10); border-color: var(--teal-light); }
+
+  /* Powered-by footer */
+  .powered-footer {
+    text-align: center; margin-top: 36px; padding: 20px 16px 16px;
+    border-top: 1px solid rgba(160,170,200,0.28);
+    position: relative; direction: ltr; unicode-bidi: embed;
+  }
+  .powered-footer::before {
+    content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-mid), transparent);
+  }
+  .pf-tag { font-size: 0.65rem; font-family: 'IBM Plex Mono', monospace; color: var(--muted); text-transform: uppercase; letter-spacing: 1.4px; margin-bottom: 6px; }
+  .pf-name { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: .5px; }
+  .pf-name span { color: var(--accent); }
+  .pf-contacts { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; }
+  .pf-contact { display: flex; align-items: center; gap: 7px; font-size: 0.8rem; font-family: 'IBM Plex Mono', monospace; color: var(--muted); }
+  .pf-contact a { color: var(--muted); text-decoration: none; transition: color .2s; }
+  .pf-contact a:hover { color: var(--accent); }
+
+  /* Paste section collapsible */
+  .paste-section { display: none; }
+  .paste-toggle { background: transparent; border: none; color: var(--muted2); font-size: 0.72rem; font-family: 'IBM Plex Mono', monospace; cursor: pointer; padding: 4px 0; margin-top: 6px; display: flex; align-items: center; gap: 5px; transition: color .2s; }
+  .paste-toggle:hover { color: var(--accent); }
+  .paste-toggle .arrow { transition: transform .2s; display: inline-block; }
+  .paste-toggle.open .arrow { transform: rotate(90deg); }
+  .paste-section.visible { display: block; }
+
+  /* ── App wrapper — max width ── */
+  .app-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* ── Theme toggle button ── */
+  .theme-btn {
+    background: rgba(245,247,252,0.85);
+    border: 1px solid rgba(90,96,128,0.45);
+    color: var(--accent);
+    border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; font-weight: 700;
+    cursor: pointer; font-family: inherit; transition: all .2s; letter-spacing: .3px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .theme-btn:hover { background: var(--accent-glow); }
+
+  .btn-clear {
+    background: rgba(245,247,252,0.85);
+    border: 1px solid rgba(155,32,32,0.40);
+    color: var(--red);
+    border-radius: 8px; padding: 7px 16px; font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; font-family: inherit; transition: all .2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .btn-clear:hover { background: rgba(155,32,32,0.08); }
+
+  /* ── DARK MODE ── */
+  [data-theme="dark"] {
+    --bg: #07090f;
+    --bg2: #0a0d16;
+    --surface: #0f1623;
+    --surface2: #16202e;
+    --border: #243347;
+    --border2: #1a2840;
+    --accent: #00c8ff;
+    --accent-mid: #00c8ff;
+    --accent-light: #33d4ff;
+    --accent-glow: rgba(0,200,255,0.10);
+    --teal: #00c8ff;
+    --teal-light: #33d4ff;
+    --green: #00e676;
+    --red: #ff4757;
+    --yellow: #ffd600;
+    --purple: #b388ff;
+    --text: #dde6f0;
+    --text2: #b0c4d8;
+    --muted: #5a7490;
+    --muted2: #3d5166;
+    --shadow: 0 4px 20px rgba(0,0,0,0.40), 0 1px 4px rgba(0,0,0,0.30);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.35);
+  }
+  [data-theme="dark"] body {
+    background-color: #07090f;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(0,200,255,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 0% 60%, rgba(0,120,255,0.14) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 40%, rgba(80,0,200,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(0,60,180,0.20) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='400' viewBox='0 0 1440 400'%3E%3Cpath fill='%2300c8ff' fill-opacity='0.055' d='M0,200L60,213.3C120,227,240,253,360,250.7C480,248,600,213,720,197.3C840,181,960,181,1080,197.3C1200,213,1320,245,1380,261.3L1440,277L1440,400L0,400Z'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='400' viewBox='0 0 1440 400'%3E%3Cpath fill='%230050aa' fill-opacity='0.07' d='M0,300L80,282.7C160,267,320,235,480,229.3C640,224,800,245,960,256C1120,267,1280,267,1360,266.7L1440,267L1440,400L0,400Z'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='300' viewBox='0 0 1440 300'%3E%3Cpath fill='%235000c8' fill-opacity='0.045' d='M0,128L80,149.3C160,171,320,213,480,213.3C640,213,800,171,960,154.7C1120,139,1280,149,1360,154.7L1440,160L1440,300L0,300Z'/%3E%3C/svg%3E"),
+      linear-gradient(170deg, #07090f 0%, #090d1a 35%, #070b16 65%, #050810 100%);
+    background-size: auto, auto, auto, auto, 100% 55%, 100% 45%, 100% 35%, cover;
+    background-position: center, center, center, center, bottom, bottom, bottom, center;
+    background-repeat: no-repeat;
+  }
+
+  [data-theme="light"] body {
+    background-color: #e8f0fe;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(99,102,241,0.22) 0%, transparent 50%),
+      radial-gradient(circle at 80% 10%, rgba(59,130,246,0.18) 0%, transparent 45%),
+      radial-gradient(circle at 95% 60%, rgba(139,92,246,0.16) 0%, transparent 45%),
+      radial-gradient(circle at 10% 80%, rgba(16,185,129,0.14) 0%, transparent 45%),
+      radial-gradient(circle at 60% 90%, rgba(99,102,241,0.12) 0%, transparent 40%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='1.5' fill='%236366f1' fill-opacity='0.18'/%3E%3Ccircle cx='0' cy='0' r='1.5' fill='%236366f1' fill-opacity='0.18'/%3E%3Ccircle cx='80' cy='0' r='1.5' fill='%236366f1' fill-opacity='0.18'/%3E%3Ccircle cx='0' cy='80' r='1.5' fill='%236366f1' fill-opacity='0.18'/%3E%3Ccircle cx='80' cy='80' r='1.5' fill='%236366f1' fill-opacity='0.18'/%3E%3Cline x1='0' y1='40' x2='80' y2='40' stroke='%236366f1' stroke-width='0.4' stroke-opacity='0.08'/%3E%3Cline x1='40' y1='0' x2='40' y2='80' stroke='%236366f1' stroke-width='0.4' stroke-opacity='0.08'/%3E%3C/svg%3E"),
+      linear-gradient(135deg, #eef2ff 0%, #e0e7ff 30%, #ede9fe 60%, #f0fdf4 100%);
+    background-size: auto, auto, auto, auto, auto, 80px 80px, cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, no-repeat;
+  }
+  [data-theme="dark"] header {
+    background: linear-gradient(135deg, rgba(15,22,35,0.98) 0%, rgba(22,32,46,0.95) 100%);
+    border-color: #243347;
+    border-top-color: #00c8ff;
+  }
+  [data-theme="dark"] header::before { background: linear-gradient(90deg, transparent, #00c8ff, transparent); }
+  [data-theme="dark"] h1 { color: #fff; }
+  [data-theme="dark"] h1 span { color: #00c8ff; }
+  [data-theme="dark"] .upload-card { background: linear-gradient(145deg, #0f1623, #16202e); border-color: #243347; border-top-color: #00c8ff44; }
+  [data-theme="dark"] .file-slot { background: #16202e; border-color: #243347; }
+  [data-theme="dark"] .file-slot:hover, [data-theme="dark"] .file-slot.dragover { background: rgba(0,200,255,0.06); border-color: #00c8ff; }
+  [data-theme="dark"] .add-file-btn { background: transparent; border-color: #3d5166; color: #5a7490; }
+  [data-theme="dark"] .add-file-btn:hover { border-color: #00c8ff; color: #00c8ff; background: rgba(0,200,255,0.06); }
+  [data-theme="dark"] textarea.paste-box { background: #16202e; border-color: #243347; color: #dde6f0; }
+  [data-theme="dark"] textarea.paste-box:focus { border-color: #00c8ff; box-shadow: 0 0 0 3px rgba(0,200,255,0.10); }
+  [data-theme="dark"] .compare-btn { background: #00c8ff; color: #000; box-shadow: 0 4px 18px rgba(0,200,255,0.30); text-shadow: none; }
+  [data-theme="dark"] .compare-btn:hover { background: #33d4ff; box-shadow: 0 6px 24px rgba(0,200,255,0.40); }
+  [data-theme="dark"] .stat { background: #0f1623; border-color: #243347; }
+  [data-theme="dark"] .stat:hover { border-color: #5a7490; }
+  [data-theme="dark"] .s-total .num { color: #00c8ff; }
+  [data-theme="dark"] .s-match .num { color: #00e676; }
+  [data-theme="dark"] .s-diff .num { color: #ffd600; }
+  [data-theme="dark"] .s-nohotel .num { color: #ff4757; }
+  [data-theme="dark"] .s-nosys .num { color: #b388ff; }
+  [data-theme="dark"] .s-nosys.active-stat { border-color: #b388ff; box-shadow: 0 0 0 2px rgba(179,136,255,0.18); }
+  [data-theme="dark"] .search-box { background: #0f1623; border-color: #243347; color: #dde6f0; box-shadow: none; }
+  [data-theme="dark"] .search-box:focus { border-color: #00c8ff; box-shadow: 0 0 0 3px rgba(0,200,255,0.10); }
+  [data-theme="dark"] .search-box::placeholder { color: #3d5166; }
+  [data-theme="dark"] .section-hdr { border-color: #243347; }
+  [data-theme="dark"] .result-item { background: #0f1623; border-color: #243347; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+  [data-theme="dark"] .result-item:hover { border-color: #2e4560; }
+  [data-theme="dark"] .result-body { background: rgba(22,32,46,0.60); border-top-color: #243347; }
+  [data-theme="dark"] .rsv-num { color: #00c8ff; }
+  [data-theme="dark"] .rsv-copy-btn { border-color: #243347; color: #5a7490; }
+  [data-theme="dark"] .rsv-copy-btn:hover { color: #00c8ff; border-color: #00c8ff; background: rgba(0,200,255,0.08); }
+  [data-theme="dark"] .rsv-copy-btn.copied { color: #00e676; border-color: #00e676; background: rgba(0,230,118,0.08); }
+  [data-theme="dark"] .guest-name { color: #dde6f0; }
+  [data-theme="dark"] .bd-match { background: rgba(0,230,118,.15); color: #00e676; border-color: rgba(0,230,118,.25); }
+  [data-theme="dark"] .bd-diff { background: rgba(255,214,0,.15); color: #ffd600; border-color: rgba(255,214,0,.25); }
+  [data-theme="dark"] .bd-nohotel { background: rgba(255,71,87,.15); color: #ff4757; border-color: rgba(255,71,87,.25); }
+  [data-theme="dark"] .bd-nosys { background: rgba(179,136,255,.15); color: #b388ff; border-color: rgba(179,136,255,.25); }
+  [data-theme="dark"] .ctbl th { background: rgba(0,200,255,0.04); border-color: #243347; color: #5a7490; }
+  [data-theme="dark"] .ctbl td { border-color: rgba(36,51,71,0.5); color: #b0c4d8; }
+  [data-theme="dark"] .v-ok { color: #00e676; }
+  [data-theme="dark"] .v-diff { color: #ffd600; }
+  [data-theme="dark"] .v-na { color: #3d5166; }
+  [data-theme="dark"] .alert-msg.red { color: #ff4757; }
+  [data-theme="dark"] .alert-msg.purple { color: #b388ff; }
+  [data-theme="dark"] .results-title { color: #dde6f0; }
+  [data-theme="dark"] .mismatch-chip { background: rgba(255,214,0,.08); border-color: rgba(255,214,0,.3); color: #ffd600; }
+  [data-theme="dark"] .export-bar { background: #0f1623; border-color: #243347; }
+  [data-theme="dark"] .export-btn { background: transparent; border-color: #243347; color: #dde6f0; }
+  [data-theme="dark"] .export-btn:hover { border-color: #00c8ff; color: #00c8ff; background: rgba(0,200,255,0.06); }
+  [data-theme="dark"] .export-btn.excel:hover { border-color: #00e676; color: #00e676; background: rgba(0,230,118,0.06); }
+  [data-theme="dark"] .export-btn.img:hover { border-color: #b388ff; color: #b388ff; background: rgba(179,136,255,0.06); }
+  [data-theme="dark"] .chk-box { background: #16202e; border-color: #243347; }
+  [data-theme="dark"] .export-chk-group input:checked + .chk-box { border-color: #00c8ff; background: rgba(0,200,255,0.12); }
+  [data-theme="dark"] .export-chk-group input:checked + .chk-box::after { color: #00c8ff; }
+  [data-theme="dark"] .smart-drop-zone { background: #0f1623; border-color: #243347; }
+  [data-theme="dark"] .smart-drop-zone.dragover { border-color: #00c8ff; background: rgba(0,200,255,0.05); }
+  [data-theme="dark"] .drop-formats { background: #16202e; border-color: #243347; }
+  [data-theme="dark"] .file-tag { background: #16202e; border-color: #243347; }
+  [data-theme="dark"] .file-tag.hotel-tag { border-color: rgba(0,200,255,0.4); background: rgba(0,200,255,0.06); }
+  [data-theme="dark"] .file-tag.system-tag { border-color: rgba(0,230,118,0.4); background: rgba(0,230,118,0.06); }
+  [data-theme="dark"] .file-tag.unknown-tag { border-color: rgba(255,214,0,0.4); background: rgba(255,214,0,0.06); }
+  [data-theme="dark"] .hotel-tag .tag-type { background: rgba(0,200,255,0.2); color: #00c8ff; }
+  [data-theme="dark"] .system-tag .tag-type { background: rgba(0,230,118,0.2); color: #00e676; }
+  [data-theme="dark"] .unknown-tag .tag-type { background: rgba(255,214,0,0.2); color: #ffd600; }
+  [data-theme="dark"] .add-more-btn { background: transparent; border-color: #3d5166; color: #5a7490; }
+  [data-theme="dark"] .add-more-btn:hover { border-color: #00c8ff; color: #00c8ff; background: rgba(0,200,255,0.06); }
+  [data-theme="dark"] .type-select { background: #16202e; border-color: #243347; color: #dde6f0; }
+  [data-theme="dark"] .lang-btn { background: transparent; border-color: #00c8ff; color: #00c8ff; }
+  [data-theme="dark"] .lang-btn:hover { background: rgba(0,200,255,0.10); }
+  [data-theme="dark"] .theme-btn { background: #16202e; border-color: #243347; color: #5a7490; }
+  [data-theme="dark"] .theme-btn:hover { border-color: #00c8ff; color: #00c8ff; background: rgba(0,200,255,0.08); }
+  [data-theme="dark"] .btn-clear { background: #16202e; border-color: rgba(255,71,87,0.4); color: #ff4757; }
+  [data-theme="dark"] .btn-clear:hover { background: rgba(255,71,87,0.10); }
+  [data-theme="dark"] .powered-footer { border-top-color: #243347; }
+  [data-theme="dark"] .pf-name { color: #fff; }
+  [data-theme="dark"] .pf-name span { color: #00c8ff; }
+  [data-theme="dark"] .paste-toggle { color: #3d5166; }
+  [data-theme="dark"] .paste-toggle:hover { color: #00c8ff; }
+  [data-theme="dark"] .sd-nosys { background: #b388ff; }
+  [data-theme="dark"] .export-sections-row { border-top-color: #243347; }
+
+  [data-theme="light"] .app-wrapper { position: relative; }
+  [data-theme="light"] .app-wrapper::before, [data-theme="light"] .app-wrapper::after { content: '✦'; position: fixed; font-size: 1.4rem; color: #e0b93a; opacity: 0.18; pointer-events: none; z-index: 0; }
+  [data-theme="light"] .app-wrapper::before { top: 8%; left: 3%; }
+  [data-theme="light"] .app-wrapper::after { bottom: 15%; right: 4%; font-size: 0.9rem; opacity: 0.12; }
+  [data-theme="light"] body { background-color: #f6fbfb; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23e0b93a' fill-opacity='0.12'/%3E%3C/svg%3E"), radial-gradient(ellipse at 0% 0%, rgba(224,185,58,0.10) 0%, transparent 55%), radial-gradient(ellipse at 100% 100%, rgba(224,185,58,0.07) 0%, transparent 55%), linear-gradient(180deg, #ffffff 0%, #f0fafa 100%); background-size: 40px 40px, auto, auto, cover; background-repeat: repeat, no-repeat, no-repeat, no-repeat; color: #1a2744; }
+  [data-theme="light"] header { background: #ffffff; border: none; border-bottom: 3px solid #e0b93a; border-radius: 16px; box-shadow: 0 4px 24px rgba(224,185,58,0.12), 0 1px 6px rgba(0,0,0,0.06); position: relative; overflow: hidden; }
+  [data-theme="light"] header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #e0b93a, #c9a030, #e0b93a); border-radius: 16px 16px 0 0; }
+  [data-theme="light"] header::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #e0b93a, transparent); }
+  [data-theme="light"] h1 { color: #1a2744; }
+  [data-theme="light"] h1 span { color: #e0b93a; }
+  [data-theme="light"] .subtitle { color: #6b8fa8; letter-spacing: 1.5px; }
+  [data-theme="light"] .theme-btn { background: #ffffff; border: 2px solid #e0b93a; color: #e0b93a; font-weight: 700; box-shadow: 0 2px 8px rgba(224,185,58,0.15); }
+  [data-theme="light"] .theme-btn:hover { background: #e0b93a; color: #fff; }
+  [data-theme="light"] .lang-btn { background: #ffffff; border: 2px solid #1a2744; color: #1a2744; box-shadow: 0 2px 8px rgba(26,39,68,0.10); }
+  [data-theme="light"] .lang-btn:hover { background: #1a2744; color: #fff; }
+  [data-theme="light"] .btn-clear { background: #ffffff; border: 2px solid #e05c6a; color: #e05c6a; box-shadow: 0 2px 8px rgba(224,92,106,0.12); }
+  [data-theme="light"] .btn-clear:hover { background: #e05c6a; color: #fff; }
+  [data-theme="light"] .upload-card { background: #ffffff; border: none; border-top: 3px solid #e0b93a; border-radius: 16px; padding: 18px 20px; box-shadow: 0 6px 28px rgba(224,185,58,0.10), 0 1px 6px rgba(0,0,0,0.05); }
+  [data-theme="light"] .upload-card:hover { box-shadow: 0 10px 40px rgba(224,185,58,0.18), 0 2px 10px rgba(0,0,0,0.07); transform: translateY(-2px); }
+  [data-theme="light"] .card-label { color: #e0b93a; font-weight: 700; letter-spacing: 1.5px; }
+  [data-theme="light"] .card-title { color: #1a2744; }
+  [data-theme="light"] .file-slot { background: #f0fafa; border: 1.5px dashed rgba(224,185,58,0.45); border-radius: 10px; }
+  [data-theme="light"] .file-slot:hover, [data-theme="light"] .file-slot.dragover { border-color: #e0b93a; background: rgba(224,185,58,0.06); }
+  [data-theme="light"] .slot-label { color: #6b8fa8; }
+  [data-theme="light"] .slot-name { color: #e0b93a; }
+  [data-theme="light"] .add-file-btn { background: transparent; border: 1.5px dashed rgba(224,185,58,0.40); color: #6b8fa8; border-radius: 8px; }
+  [data-theme="light"] .add-file-btn:hover { border-color: #e0b93a; color: #e0b93a; background: rgba(224,185,58,0.06); }
+  [data-theme="light"] textarea.paste-box { background: #f6fbfb; border-color: rgba(224,185,58,0.30); color: #1a2744; }
+  [data-theme="light"] textarea.paste-box:focus { border-color: #e0b93a; box-shadow: 0 0 0 3px rgba(224,185,58,0.12); }
+  [data-theme="light"] textarea.paste-box::placeholder { color: #a0b8c8; }
+  [data-theme="light"] .paste-toggle { color: #a0b8c8; }
+  [data-theme="light"] .paste-toggle:hover { color: #e0b93a; }
+  [data-theme="light"] .smart-drop-zone { background: #ffffff; border: 2px dashed rgba(224,185,58,0.40); border-radius: 16px; box-shadow: 0 4px 20px rgba(224,185,58,0.08), 0 1px 4px rgba(0,0,0,0.04); }
+  [data-theme="light"] .smart-drop-zone.dragover { border-color: #e0b93a; background: rgba(224,185,58,0.04); }
+  [data-theme="light"] .drop-title { color: #1a2744; }
+  [data-theme="light"] .drop-link { color: #e0b93a; }
+  [data-theme="light"] .drop-sub { color: #6b8fa8; }
+  [data-theme="light"] .drop-formats { background: #f0fafa; border-color: rgba(224,185,58,0.25); color: #6b8fa8; }
+  [data-theme="light"] .compare-btn { background: linear-gradient(135deg, #e0b93a 0%, #c9a030 50%, #9a7020 100%); color: #ffffff; box-shadow: 0 6px 24px rgba(224,185,58,0.40), 0 2px 6px rgba(0,0,0,0.08); text-shadow: none; letter-spacing: 0.8px; font-size: 0.95rem; border-radius: 12px; }
+  [data-theme="light"] .compare-btn:hover { background: linear-gradient(135deg, #f0cc50 0%, #e0b93a 50%, #c9a030 100%); box-shadow: 0 10px 32px rgba(224,185,58,0.55), 0 3px 8px rgba(0,0,0,0.10); transform: translateY(-2px); }
+  [data-theme="light"] .stat { background: #ffffff; border: none; border-radius: 12px; box-shadow: 0 4px 16px rgba(224,185,58,0.10), 0 1px 4px rgba(0,0,0,0.05); }
+  [data-theme="light"] .stat:hover { box-shadow: 0 8px 28px rgba(224,185,58,0.18), 0 2px 8px rgba(0,0,0,0.07); transform: translateY(-3px); }
+  [data-theme="light"] .stat.active-stat { border: 2px solid #e0b93a; box-shadow: 0 0 0 3px rgba(224,185,58,0.15), 0 4px 16px rgba(224,185,58,0.12); }
+  [data-theme="light"] .s-total .num { color: #e0b93a; }
+  [data-theme="light"] .s-match .num { color: #22c55e; }
+  [data-theme="light"] .s-diff .num { color: #f59e0b; }
+  [data-theme="light"] .s-nohotel .num { color: #e05c6a; }
+  [data-theme="light"] .s-nosys .num { color: #8b5cf6; }
+  [data-theme="light"] .stat .lbl { color: #6b8fa8; }
+  [data-theme="light"] .s-match.active-stat { border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.12); }
+  [data-theme="light"] .s-diff.active-stat { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.12); }
+  [data-theme="light"] .s-nohotel.active-stat { border-color: #e05c6a; box-shadow: 0 0 0 3px rgba(224,92,106,0.12); }
+  [data-theme="light"] .s-nosys.active-stat { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,0.12); }
+  [data-theme="light"] .search-box { background: #ffffff; border: 1.5px solid rgba(224,185,58,0.30); color: #1a2744; box-shadow: 0 2px 8px rgba(224,185,58,0.08); }
+  [data-theme="light"] .search-box:focus { border-color: #e0b93a; box-shadow: 0 0 0 3px rgba(224,185,58,0.14); }
+  [data-theme="light"] .search-box::placeholder { color: #a0b8c8; }
+  [data-theme="light"] .section-hdr { border-color: rgba(224,185,58,0.20); }
+  [data-theme="light"] .section-hdr h3 { color: #6b8fa8; }
+  [data-theme="light"] .result-item { background: #ffffff; border: none; border-left: 3px solid #e8eef2; border-radius: 12px; box-shadow: 0 3px 14px rgba(224,185,58,0.08), 0 1px 4px rgba(0,0,0,0.04); }
+  [data-theme="light"] .result-item:hover { box-shadow: 0 6px 24px rgba(224,185,58,0.14), 0 2px 8px rgba(0,0,0,0.06); }
+  [data-theme="light"] .st-match { border-left-color: #22c55e !important; }
+  [data-theme="light"] .st-diff { border-left-color: #f59e0b !important; }
+  [data-theme="light"] .st-nohotel { border-left-color: #e05c6a !important; }
+  [data-theme="light"] .st-nosys { border-left-color: #8b5cf6 !important; }
+  [data-theme="light"] .result-body { background: #f6fbfb; border-top-color: rgba(224,185,58,0.12); }
+  [data-theme="light"] .rsv-num { color: #e0b93a; }
+  [data-theme="light"] .rsv-copy-btn { border-color: rgba(154,112,32,0.35); color: #9a7020; }
+  [data-theme="light"] .rsv-copy-btn:hover { color: #9a7020; border-color: #e0b93a; background: rgba(224,185,58,0.10); }
+  [data-theme="light"] .rsv-copy-btn.copied { color: #22c55e; border-color: #22c55e; background: rgba(34,197,94,0.08); }
+  [data-theme="light"] .guest-name { color: #1a2744; }
+  [data-theme="light"] .htl-tag { color: #6b8fa8; }
+  [data-theme="light"] .chevron { color: #a0b8c8; }
+  [data-theme="light"] .bd-match { background: rgba(34,197,94,0.10); color: #16a34a; border-color: rgba(34,197,94,0.22); }
+  [data-theme="light"] .bd-diff { background: rgba(245,158,11,0.10); color: #d97706; border-color: rgba(245,158,11,0.22); }
+  [data-theme="light"] .bd-nohotel { background: rgba(224,92,106,0.10); color: #e05c6a; border-color: rgba(224,92,106,0.22); }
+  [data-theme="light"] .bd-nosys { background: rgba(139,92,246,0.10); color: #7c3aed; border-color: rgba(139,92,246,0.22); }
+  [data-theme="light"] .ctbl th { background: rgba(224,185,58,0.05); border-color: rgba(224,185,58,0.18); color: #6b8fa8; }
+  [data-theme="light"] .ctbl td { border-color: rgba(224,185,58,0.08); color: #2a3f5a; }
+  [data-theme="light"] .v-ok { color: #16a34a; }
+  [data-theme="light"] .v-diff { color: #d97706; }
+  [data-theme="light"] .v-na { color: #a0b8c8; }
+  [data-theme="light"] .alert-msg.red { color: #e05c6a; }
+  [data-theme="light"] .alert-msg.purple { color: #7c3aed; }
+  [data-theme="light"] .results-title { color: #1a2744; }
+  [data-theme="light"] .mismatch-chip { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.28); color: #d97706; }
+  [data-theme="light"] .export-bar { background: #ffffff; border: none; box-shadow: 0 4px 18px rgba(224,185,58,0.10), 0 1px 4px rgba(0,0,0,0.04); border-radius: 14px; }
+  [data-theme="light"] .export-btn { background: #f6fbfb; border: 1.5px solid rgba(224,185,58,0.28); color: #1a2744; }
+  [data-theme="light"] .export-btn:hover { border-color: #e0b93a; color: #e0b93a; background: rgba(224,185,58,0.06); }
+  [data-theme="light"] .export-btn.excel:hover { border-color: #22c55e; color: #16a34a; background: rgba(34,197,94,0.06); }
+  [data-theme="light"] .export-btn.img:hover { border-color: #8b5cf6; color: #7c3aed; background: rgba(139,92,246,0.06); }
+  [data-theme="light"] .export-sections-row { border-top-color: rgba(224,185,58,0.14); }
+  [data-theme="light"] .export-bar-label { color: #6b8fa8; }
+  [data-theme="light"] .chk-box { background: #f0fafa; border-color: rgba(224,185,58,0.35); }
+  [data-theme="light"] .export-chk-group input:checked + .chk-box { border-color: #e0b93a; background: rgba(224,185,58,0.12); }
+  [data-theme="light"] .export-chk-group input:checked + .chk-box::after { color: #e0b93a; }
+  [data-theme="light"] .chk-match input:checked + .chk-box { border-color: #22c55e !important; background: rgba(34,197,94,0.10) !important; }
+  [data-theme="light"] .chk-match input:checked + .chk-box::after { color: #22c55e !important; }
+  [data-theme="light"] .chk-nohotel input:checked + .chk-box { border-color: #e05c6a !important; background: rgba(224,92,106,0.10) !important; }
+  [data-theme="light"] .chk-nohotel input:checked + .chk-box::after { color: #e05c6a !important; }
+  [data-theme="light"] .chk-nosys input:checked + .chk-box { border-color: #8b5cf6 !important; background: rgba(139,92,246,0.10) !important; }
+  [data-theme="light"] .chk-nosys input:checked + .chk-box::after { color: #8b5cf6 !important; }
+  [data-theme="light"] .chk-diff input:checked + .chk-box { border-color: #f59e0b !important; background: rgba(245,158,11,0.10) !important; }
+  [data-theme="light"] .chk-diff input:checked + .chk-box::after { color: #f59e0b !important; }
+  [data-theme="light"] .chk-label { color: #6b8fa8; }
+  [data-theme="light"] .export-chk-group:hover .chk-label { color: #1a2744; }
+  [data-theme="light"] .file-tag { background: #f6fbfb; border-color: rgba(224,185,58,0.22); }
+  [data-theme="light"] .file-tag.hotel-tag { border-color: rgba(224,185,58,0.40); background: rgba(224,185,58,0.07); }
+  [data-theme="light"] .file-tag.system-tag { border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.06); }
+  [data-theme="light"] .file-tag.unknown-tag { border-color: rgba(245,158,11,0.30); background: rgba(245,158,11,0.06); }
+  [data-theme="light"] .hotel-tag .tag-type { background: rgba(224,185,58,0.16); color: #c9a030; }
+  [data-theme="light"] .system-tag .tag-type { background: rgba(34,197,94,0.16); color: #16a34a; }
+  [data-theme="light"] .unknown-tag .tag-type { background: rgba(245,158,11,0.16); color: #d97706; }
+  [data-theme="light"] .tag-name { color: #1a2744; }
+  [data-theme="light"] .add-more-btn { background: #f0fafa; border-color: rgba(224,185,58,0.35); color: #6b8fa8; }
+  [data-theme="light"] .add-more-btn:hover { border-color: #e0b93a; color: #e0b93a; background: rgba(224,185,58,0.08); }
+  [data-theme="light"] .type-select { background: #f6fbfb; border-color: rgba(224,185,58,0.25); color: #1a2744; }
+  [data-theme="light"] .powered-footer { border-top-color: rgba(224,185,58,0.20); }
+  [data-theme="light"] .powered-footer::before { background: linear-gradient(90deg, transparent, #e0b93a, transparent); }
+  [data-theme="light"] .pf-name { color: #1a2744; }
+  [data-theme="light"] .pf-name span { color: #e0b93a; }
+  [data-theme="light"] .pf-tag { color: #6b8fa8; }
+  [data-theme="light"] .pf-contact { color: #6b8fa8; }
+  [data-theme="light"] .pf-contact a { color: #6b8fa8; }
+  [data-theme="light"] .pf-contact a:hover { color: #e0b93a; }
+  [data-theme="light"] .meta-row { color: #6b8fa8; }
+  [data-theme="light"] .meta-row span { color: #1a2744; }
+  [data-theme="light"] .search-count { color: #6b8fa8; }
+  [data-theme="light"] .sd-nosys { background: #8b5cf6; }
+
+  @media (max-width: 600px) {
+    body { padding: 10px; }
+    header { padding: 14px 14px 12px; border-radius: 12px; }
+    h1 { font-size: 1.2rem; }
+    .subtitle { font-size: 0.70rem; }
+    .top-actions { gap: 6px; flex-wrap: wrap; }
+    .lang-btn, .theme-btn, .btn-clear { font-size: 0.72rem; padding: 6px 10px; }
+    .upload-grid { grid-template-columns: 1fr; gap: 10px; }
+    .upload-card { padding: 12px; border-radius: 12px; }
+    .card-title { font-size: 0.85rem; }
+    .smart-drop-zone { border-radius: 12px; }
+    .drop-inner { padding: 18px 14px; }
+    .drop-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .drop-title { font-size: 0.82rem; }
+    .drop-sub { font-size: 0.68rem; }
+    .stats { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .stat .num { font-size: 1.2rem; }
+    .stat .lbl { font-size: 0.56rem; }
+    .stat { padding: 7px 6px; }
+    .compare-btn { padding: 11px; font-size: 0.88rem; }
+    .result-header { gap: 6px; padding: 8px 10px; flex-wrap: wrap; }
+    .rsv-num { min-width: 68px; font-size: 0.78rem; }
+    .guest-name { font-size: 0.76rem; min-width: 0; }
+    .htl-tag { display: none; }
+    .badge { font-size: 0.6rem; padding: 2px 6px; }
+    .result-body { padding: 0 10px 10px; }
+    table.ctbl { font-size: 0.72rem; }
+    .ctbl th, .ctbl td { padding: 4px 6px; }
+    .export-bar { padding: 10px 12px; }
+    .export-bar-row { gap: 6px; }
+    .export-btn { font-size: 0.72rem; padding: 5px 10px; }
+    .results-hdr { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .mismatch-chip { font-size: 0.64rem; }
+    .section-hdr { margin: 12px 0 6px; }
+    .search-box { font-size: 0.75rem; padding: 7px 10px; }
+    .pf-contacts { flex-direction: column; gap: 8px; align-items: center; }
+    .pf-contact { font-size: 0.74rem; }
+    .pf-name { font-size: 0.95rem; }
+    .export-sections-row { gap: 8px; }
+    .chk-label { font-size: 0.66rem; }
+    .file-tags-wrap { padding: 10px 12px 8px; }
+    .file-tags { gap: 6px; }
+    .file-tag { font-size: 0.68rem; padding: 4px 8px; }
+  }
+  @media (max-width: 380px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 1.05rem; }
+    .top-actions { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="app-wrapper">
+
+<header>
+  <div id="headerTitle">
+    <h1 id="mainTitle">ALTANTAWY <span>Comparison</span> Tool</h1>
+    <p class="subtitle" id="mainSubtitle">FOR VALY AL MADINA HOTEL</p>
+  </div>
+</header>
+
+<div class="top-actions">
+  <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ Light Mode</button>
+  <button class="lang-btn" id="langBtn" onclick="toggleLang()">🌐 عربي</button>
+  <button class="btn-clear" id="btnClear" onclick="hardReset()">🗑 Clear All &amp; Reset</button>
+</div>
+
+<div id="smartDrop" class="smart-drop-zone" style="display:none">
+  <input type="file" id="smartFileInput" multiple accept=".pdf,.txt,.csv" style="display:none">
+  <div class="drop-inner" id="dropInner">
+    <div class="drop-icon">📂</div>
+    <div class="drop-title" id="dropTitle">Drop files here or <span class="drop-link" onclick="document.getElementById('smartFileInput').click()">browse</span></div>
+    <div class="drop-sub" id="dropSub">Select both Hotel &amp; System files at once — app auto-detects type</div>
+    <div class="drop-formats" id="dropFormats">PDF · TXT · CSV &nbsp;·&nbsp; Multiple files supported</div>
+  </div>
+  <div id="fileTagsWrap" class="file-tags-wrap" style="display:none">
+    <div id="fileTags" class="file-tags"></div>
+    <button class="add-more-btn" onclick="document.getElementById('smartFileInput').click()">＋ Add More Files</button>
+  </div>
+</div>
+
+<div class="upload-grid">
+  <div class="upload-card">
+    <div class="card-label" data-en="Hotel File(s)" data-ar="ملفات الفندق">Hotel File(s)</div>
+    <div class="card-title" data-en="🏨 Hotel Main File" data-ar="🏨 الملف الرئيسي للفندق">🏨 Hotel Main File</div>
+    <div class="file-slots" id="hotelSlots"></div>
+    <button class="add-file-btn" onclick="addHotelSlot()" data-en="＋ Add Hotel File Manually" data-ar="＋ إضافة ملف فندق يدوياً">＋ Add Hotel File Manually</button>
+    <button class="paste-toggle" id="hotelPasteToggle" onclick="togglePaste('hotel')"><span class="arrow">▶</span> <span data-en="Or paste hotel text" data-ar="أو الصق نص الفندق">Or paste hotel text</span></button>
+    <div class="paste-section" id="hotelPasteSection">
+      <textarea class="paste-box" id="hotelPaste" placeholder="Paste hotel reservation text here..."></textarea>
+    </div>
+  </div>
+  <div class="upload-card">
+    <div class="card-label" data-en="System File(s)" data-ar="ملفات النظام">System File(s)</div>
+    <div class="card-title" data-en="🖥 System Files" data-ar="🖥 ملفات النظام">🖥 System Files</div>
+    <div class="file-slots" id="systemSlots"></div>
+    <button class="add-file-btn" onclick="addSystemSlot()" data-en="＋ Add System File Manually" data-ar="＋ إضافة ملف نظام يدوياً">＋ Add System File Manually</button>
+    <button class="paste-toggle" id="systemPasteToggle" onclick="togglePaste('system')"><span class="arrow">▶</span> <span data-en="Or paste system text" data-ar="أو الصق نص النظام">Or paste system text</span></button>
+    <div class="paste-section" id="systemPasteSection">
+      <textarea class="paste-box" id="systemPaste" placeholder="Paste system reservation text here..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="ignore-panel">
+  <div class="ignore-panel-hdr">
+    <span style="font-size:1.1rem">🚫</span>
+    <span class="ignore-panel-title">Ignore Mismatch</span>
+    <span class="ignore-panel-desc">Checked fields will be skipped during comparison — results update instantly</span>
+  </div>
+  <div class="ignore-chks">
+    <label class="ignore-chk-group">
+      <input type="checkbox" id="ignoreArrival" onchange="rerunIfHasResults()">
+      <span class="ignore-chk-box"></span>
+      <span class="ignore-chk-label">📅 Arrival</span>
+    </label>
+    <label class="ignore-chk-group">
+      <input type="checkbox" id="ignoreDeparture" onchange="rerunIfHasResults()">
+      <span class="ignore-chk-box"></span>
+      <span class="ignore-chk-label">📅 Departure</span>
+    </label>
+    <label class="ignore-chk-group">
+      <input type="checkbox" id="ignoreRooms" onchange="rerunIfHasResults()">
+      <span class="ignore-chk-box"></span>
+      <span class="ignore-chk-label">🛏 Rooms</span>
+    </label>
+    <label class="ignore-chk-group">
+      <input type="checkbox" id="ignoreMeal" onchange="rerunIfHasResults()">
+      <span class="ignore-chk-box"></span>
+      <span class="ignore-chk-label">🍽 Meal Plan</span>
+    </label>
+    <label class="ignore-chk-group">
+      <input type="checkbox" id="ignoreRoomType" onchange="rerunIfHasResults()">
+      <span class="ignore-chk-box"></span>
+      <span class="ignore-chk-label">🏠 Room Type</span>
+    </label>
+    <label class="ignore-chk-group">
+      <input type="checkbox" id="ignoreGuestName" onchange="rerunIfHasResults()">
+      <span class="ignore-chk-box"></span>
+      <span class="ignore-chk-label">👤 Guest Name</span>
+    </label>
+  </div>
+</div>
+<button class="compare-btn" onclick="runComparison()" id="compareBtn" data-en="⚡ Run Comparison" data-ar="⚡ تشغيل المقارنة">⚡ Run Comparison</button>
+<div id="results"></div>
+
+<script>
+// ── DEMO DATA ─────────────────────────────────────────────────────────────────
+const HOTEL_DATA = {
+  '138992':{ name:'Travel Gate GROUP', from:'21/02/2026', till:'01/03/2026', rooms:15, roomType:'Quad' },
+  '140241':{ name:'Yazan Nadi', from:'21/02/2026', till:'24/02/2026', rooms:1, roomType:'Quad' },
+  '140206':{ name:'Mohamed Hossam', from:'21/02/2026', till:'27/02/2026', rooms:4, roomType:'Quad' },
+  '140198':{ name:'ABDELRAHMAN ALQAWASMEH', from:'21/02/2026', till:'24/02/2026', rooms:1, roomType:'Quad' },
+  '137001':{ name:'Tariq Abu Mayaleh', from:'21/02/2026', till:'25/02/2026', rooms:1, roomType:'Quad' },
+};
+
+const SYSTEM_DATA = [
+  {rsv:'137001',from:'21/02/2026',till:'25/02/2026',rooms:1, guest:'Tariq Abu Mayaleh', hotel:'Ponsiana Hotel', htlRsv:'2086', roomType:'Quad'},
+  {rsv:'140206',from:'21/02/2026',till:'27/02/2026',rooms:4, guest:'Mohamed Hossam', hotel:'Ponsiana Hotel', htlRsv:'sent', roomType:'Quad'},
+  {rsv:'140241',from:'21/02/2026',till:'24/02/2026',rooms:1, guest:'Yazan Nadi', hotel:'Ponsiana Hotel', htlRsv:'sent', roomType:'Quad'},
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let hotelMap       = {};
+let systemList     = [];
+let currentResults = [];
+let rawResults     = [];
+let currentFilter  = 'all';
+let currentSearch  = '';
+
+// ── HARD RESET ────────────────────────────────────────────────────────────────
+function hardReset() {
+  hotelMap = {}; systemList = []; currentResults = []; rawResults = []; currentFilter = 'all'; currentSearch = '';
+  Object.keys(confirmedPairings).forEach(k => delete confirmedPairings[k]);
+  loadedFiles = [];
+  document.getElementById('hotelSlots').innerHTML = '';
+  document.getElementById('systemSlots').innerHTML = '';
+  document.getElementById('hotelPaste').value = '';
+  document.getElementById('systemPaste').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('fileTags').innerHTML = '';
+  document.getElementById('fileTagsWrap').style.display = 'none';
+  document.getElementById('dropInner').style.display = '';
+  addHotelSlot();
+  addSystemSlot();
+  toast(t('toastReset'));
+}
+
+// ── SLOT MANAGEMENT ───────────────────────────────────────────────────────────
+function addHotelSlot() {
+  const container = document.getElementById('hotelSlots');
+  const div = document.createElement('div');
+  div.className = 'file-slot';
+  div.innerHTML = `<input type="file" accept=".pdf,.txt,.csv">
+    <span class="slot-icon">📄</span>
+    <div class="slot-info"><div class="slot-label">Hotel file — click or drag & drop</div><div class="slot-name"></div></div>
+    <button class="remove-slot" title="Remove">✕</button>`;
+  container.appendChild(div);
+  wireSlot(div, 'hotel');
+}
+
+function addSystemSlot() {
+  const container = document.getElementById('systemSlots');
+  const div = document.createElement('div');
+  div.className = 'file-slot';
+  div.innerHTML = `<input type="file" accept=".pdf,.txt,.csv">
+    <span class="slot-icon">📋</span>
+    <div class="slot-info"><div class="slot-label">System file — click or drag & drop</div><div class="slot-name"></div></div>
+    <button class="remove-slot" title="Remove">✕</button>`;
+  container.appendChild(div);
+  wireSlot(div, 'system');
+}
+
+function wireSlot(div, type) {
+  const input  = div.querySelector('input[type="file"]');
+  const nameEl = div.querySelector('.slot-name');
+  const rm     = div.querySelector('.remove-slot');
+  div.addEventListener('click', e => { if (!e.target.closest('.remove-slot')) input.click(); });
+  rm.addEventListener('click', e => { e.stopPropagation(); div.remove(); });
+  div.addEventListener('dragover',  e => { e.preventDefault(); div.classList.add('dragover'); });
+  div.addEventListener('dragleave', () => div.classList.remove('dragover'));
+  div.addEventListener('drop', e => {
+    e.preventDefault(); div.classList.remove('dragover');
+    const f = e.dataTransfer.files[0];
+    if (f) { nameEl.textContent = f.name; nameEl.classList.add('visible'); handleFile(f, type); }
+  });
+  input.addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (f) { nameEl.textContent = f.name; nameEl.classList.add('visible'); handleFile(f, type); }
+  });
+}
+
+// ── FILE HANDLING ─────────────────────────────────────────────────────────────
+async function handleFile(file, type) {
+  let text = '';
+  if (file.name.toLowerCase().endsWith('.pdf')) {
+    try { text = await extractPdfText(file); }
+    catch(e) { toast('PDF parse failed — try pasting the text instead.'); return; }
+  } else {
+    text = await file.text();
+  }
+  const existingIdx = loadedFiles.findIndex(lf => lf.file.name === file.name && lf.type === type);
+  if (existingIdx !== -1) loadedFiles.splice(existingIdx, 1);
+  loadedFiles.push({ file, type, text });
+  if (type === 'hotel') {
+    const parsed = parseHotelText(text);
+    const cnt = Object.keys(parsed).length;
+    toast('Hotel file ready: ' + cnt + ' confirmation' + (cnt !== 1 ? 's' : '') + ' — click Run Comparison');
+  } else {
+    const parsed = parseSystemText(text);
+    toast('System file ready: ' + parsed.length + ' record(s) — click Run Comparison');
+  }
+}
+
+// PDF.js lazy loader
+let _pdfLib = null;
+async function extractPdfText(file) {
+  if (!_pdfLib) {
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      s.onload = () => { pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; _pdfLib=pdfjsLib; res(); };
+      s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+  const buf = await file.arrayBuffer();
+  const pdf = await _pdfLib.getDocument({ data: buf }).promise;
+  let out = '';
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const pg = await pdf.getPage(i);
+    const c  = await pg.getTextContent();
+    const ROW_TOL = 4;
+    const items = c.items.filter(x => x.str && x.str.trim() !== '');
+    items.sort((a, b) => {
+      const ay = a.transform[5], by = b.transform[5];
+      const ax = a.transform[4], bx = b.transform[4];
+      if (Math.abs(ay - by) > ROW_TOL) return by - ay;
+      return ax - bx;
+    });
+    let lastY = null;
+    let line = '';
+    for (const item of items) {
+      const y = item.transform[5];
+      if (lastY !== null && Math.abs(y - lastY) > ROW_TOL) {
+        out += line.trim() + '\n';
+        line = '';
+      }
+      line += (line ? ' ' : '') + item.str;
+      lastY = y;
+    }
+    if (line.trim()) out += line.trim() + '\n';
+  }
+  return out;
+}
+
+// ── ROOM TYPE NORMALIZER ──────────────────────────────────────────────────────
+// Converts codes like QU, QUAD, DBL, TPL, etc. to display labels
+function normalizeRoomType(s) {
+  if (!s) return null;
+  const m = s.trim().toUpperCase().replace(/\s+/g,' ');
+  if (/^SGL?$/.test(m) || m === 'SINGLE')                            return 'Single';
+  if (/^DB[LE]?$/.test(m) || m === 'DOUBLE' || m === 'DBL')         return 'Double';
+  if (/^T[PR][PL]?$/.test(m) || m === 'TRIPLE' || m === 'TPL' || m === 'TRP') return 'Triple';
+  if (/^QU[AD]*$/.test(m) || m === 'QUAD' || m === 'QUD')           return 'Quad';
+  if (/^TW[IN]*$/.test(m) || m === 'TWIN' || m === 'TWN')           return 'Twin';
+  if (/^K[NG][GI]*$/.test(m) || m === 'KING' || m === 'KNG')        return 'King';
+  if (m === 'SUITE' || m === 'STE')                                   return 'Suite';
+  // If already a proper label, return as-is
+  if (['Single','Double','Triple','Quad','Twin','King','Suite'].includes(s)) return s;
+  return s.trim();
+}
+
+// ── MEAL PLAN NORMALIZER ──────────────────────────────────────────────────────
+function normalizeMeal(s) {
+  if (!s) return 'Room Only';
+  const m = s.trim().toUpperCase().replace(/\s+/g,' ');
+  if (m === 'R.O' || m === 'RO' || m === 'ROOM ONLY' || m === 'R/O') return 'Room Only';
+  if (m === 'B.B' || m === 'BB' || m === 'B&B' || m === 'BED & BREAKFAST' || m === 'BED AND BREAKFAST') return 'Bed & Breakfast';
+  if (m === 'HB' || m === 'HALF BOARD') return 'Half Board';
+  if (m === 'FB' || m === 'FULL BOARD') return 'Full Board';
+  if (m === 'AI' || m === 'ALL INCLUSIVE') return 'All Inclusive';
+  if (m === 'IFTAR') return 'Iftar';
+  if (m === 'SOHOUR' || m === 'SAHOUR' || m === 'SUHOOR') return 'Sohour';
+  if (m === 'IFTAR AND SOHOUR' || m === '(IFTAR AND SOHOUR)' || m === 'IFTAR & SOHOUR') return 'Iftar and Sohour';
+  if (m === 'SOHOUR - CITY VIEW' || m === 'SOHOUR -') return 'Sohour';
+  if (m === 'IFTAR AND SOHOUR -' || m === '(IFTAR AND SOHOUR) -') return 'Iftar and Sohour';
+  return s.trim();
+}
+
+// ── HOTEL FILE PARSER ─────────────────────────────────────────────────────────
+function parseHotelText(text) {
+  const result = {};
+
+  // ── FORMAT 1: VALY AL MADINA HOTEL ──────────────────────────────────────────
+  if (/Valy\s+Al\s+Madina|res_detail|Arrivals[:\s]+Detailed/i.test(text)) {
+    const toFull = s => { const [d,m,y]=s.split('-'); return `${d}/${m}/20${y}`; };
+
+    const rt2label = code => {
+      const c = (code||'').toUpperCase();
+      if (/^SGL?$/.test(c))             return 'Single';
+      if (/^DB[LE]?$/.test(c))          return 'Double';
+      if (/^T[PR][PL]?$/.test(c))       return 'Triple';
+      if (/^QU[AD]*$/.test(c))          return 'Quad';
+      if (/^TW[IN]*$/.test(c))          return 'Twin';
+      if (/^K[NG][GI]*$/.test(c))       return 'King';
+      return code;
+    };
+
+    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    const subRe  = /^(1[5-6]\d{4})\b/;
+    const dateRe = /(\d{2}-\d{2}-\d{2})/g;
+
+    for (let i = 1; i < lines.length; i++) {
+      const subM = lines[i].match(subRe);
+      if (!subM) continue;
+
+      const confNo = subM[1];
+      const timeM = lines[i].match(/\b(\d{2}:\d{2})\b/);
+      const checkinTime = timeM ? timeM[1] : null;
+
+      let mainLine = null;
+      for (let back = 1; back <= 3; back++) {
+        if (i - back < 0) break;
+        const candidate = lines[i - back];
+        const dates = [...candidate.matchAll(dateRe)];
+        if (dates.length >= 2) { mainLine = candidate; break; }
+      }
+      if (!mainLine) continue;
+
+      const allDates = [...mainLine.matchAll(dateRe)].map(m => m[1]);
+      const arrRaw = allDates[0];
+      const depRaw = allDates[1];
+
+      const roomsM = mainLine.match(/\\b(?:SGL?|DB[LE]?|T[PR][PL]?|QU[AD]*|TW[IN]*|K[NG][GI]*|SUITE?)\\s+\\d+\\s+\\d+\\s+(\\d+)/i);
+      const rooms = roomsM ? parseInt(roomsM[1], 10) : 1;
+
+      // Room type: derive from adults (Adl.) count — number directly after room type code
+      // Hotel line format: ... QU  4  0  1 ... => adults=4 => Quad
+      const adultsM = mainLine.match(/\b(?:SGL?|DB[LE]?|T[PR][PL]?|QU[AD]*|TW[IN]*|K[NG][GI]*|SUITE?)\s+(\d+)/i);
+      const adults = adultsM ? parseInt(adultsM[1], 10) : null;
+      const adultToType = n => {
+        if (n === 1) return 'Single';
+        if (n === 2) return 'Double';
+        if (n === 3) return 'Triple';
+        if (n === 4) return 'Quad';
+        if (n === 5) return 'Quint';
+        return null;
+      };
+      const rtM = mainLine.match(/\b(SGL?|DB[LE]?|T[PR][PL]?|QU[AD]*|TW[IN]*|K[NG][GI]*|SUITE?)\b/i);
+      const roomType = adults ? adultToType(adults) : (rtM ? rt2label(rtM[1]) : null);
+      const roomNoM = mainLine.match(/^(\d{4})\b/);
+      const roomNo = roomNoM ? roomNoM[1] : null;
+
+      let name = mainLine;
+      if (roomNoM) name = name.replace(roomNoM[0], '');
+      name = name.replace(/\d{2}-\d{2}-\d{2}/g, '');
+      name = name.replace(/\s+T[-\s]+Askant.*$/i, '');
+      name = name.replace(/\s+Askant.*$/i, '');
+      name = name.replace(/\b(SGL?|DB[LE]?|T[PR][PL]?|QU[AD]*|TW[IN]*|K[NG][GI]*)\b.*/i, '');
+      name = name.replace(/\s+/g, ' ').trim();
+
+      result[confNo] = {
+        name,
+        from:     toFull(arrRaw),
+        till:     toFull(depRaw),
+        rooms,
+        roomType,   // ← extracted from hotel file
+        roomNo,
+        checkin:  checkinTime,
+        meal:     null
+      };
+    }
+
+    if (Object.keys(result).length > 0) return result;
+  }
+
+  // TOP TABLE format
+  const topRe = /(\d{4}-\d{2}-\d{2})\s+\d{2}:\d{2}\s+(\d{4}-\d{2}-\d{2})\s+\d{2}:\d{2}\s+(\d{5,6})\b/g;
+  const topMatchedPositions = new Set();
+  for (const m of text.matchAll(topRe)) {
+    const [, a, d, v] = m;
+    if (!result[v]) result[v] = { name:'', from:ymd(a), till:ymd(d), rooms:0, meal:'Room Only', roomType:null };
+    result[v].rooms++;
+    topMatchedPositions.add(m.index);
+  }
+
+  const topNoVoucherRe = /\b(\d{5})\b[^\n\r]*?(\d{4}-\d{2}-\d{2})\s+\d{2}:\d{2}\s+(\d{4}-\d{2}-\d{2})\s+\d{2}:\d{2}(?!\s+\d{5,6}\b)/g;
+  for (const m of text.matchAll(topNoVoucherRe)) {
+    if (topMatchedPositions.has(m.index)) continue;
+    const [, hid, a, d] = m;
+    const key = 'HID-' + hid;
+    const between = m[0].substring(0, m[0].indexOf(a));
+    const nameParts = between.replace(/\b\d+\b/g, ' ').replace(/\s+/g, ' ').trim();
+    const guestName = nameParts.length > 2 ? nameParts : ('Hotel Booking ' + hid);
+    if (!result[key]) result[key] = { name: guestName, from:ymd(a), till:ymd(d), rooms:0, meal:'Room Only', roomType:null };
+    result[key].rooms++;
+  }
+
+  const botRe = /(\d{4}-\d{2}-\d{2})\s+(\d{4}-\d{2}-\d{2})\s+(\d{5,6})\b[^\n\r]*?Askant\s+Travel\s*(\d+)\s+TA(?:\s+([A-Za-z][A-Za-z &\/]+?))?(?:\s+(?:CONFIRMED|ON HOLD)|\s*$)/gi;
+  const botMatchedVouchers = new Set();
+  for (const m of text.matchAll(botRe)) {
+    const [, a, d, v, r, mealRaw] = m;
+    botMatchedVouchers.add(m.index);
+    const n = parseInt(r, 10);
+    const meal = normalizeMeal(mealRaw || 'Room Only');
+    if (!result[v]) result[v] = { name:'', from:ymd(a), till:ymd(d), rooms:0, meal, roomType:null };
+    else if (!result[v].meal || result[v].meal === 'Room Only') result[v].meal = meal;
+    result[v].rooms += n;
+  }
+
+  const botNoVoucherRe = /\b(\d{5})\b[^\n\r]*?(\d{4}-\d{2}-\d{2})\s+(\d{4}-\d{2}-\d{2})(?!\s+\d{5,6}\b)[^\n\r]*?Askant\s+Travel\s*(\d+)\s+TA(?:\s+([A-Za-z][A-Za-z &\/]+?))?(?:\s+(?:CONFIRMED|ON HOLD)|\s*$)/gi;
+  for (const m of text.matchAll(botNoVoucherRe)) {
+    if (botMatchedVouchers.has(m.index)) continue;
+    const [, hid, a, d, r, mealRaw] = m;
+    const key = 'HID-' + hid;
+    if (result[key]) continue;
+    const n = parseInt(r, 10);
+    if (isNaN(n) || n <= 0 || n > 500) continue;
+    const meal = normalizeMeal(mealRaw || 'Room Only');
+    result[key] = { name: 'Hotel Booking ' + hid, from: ymd(a), till: ymd(d), rooms: n, meal, roomType:null };
+  }
+
+  const noVoucherRe = /\b(\d{4})\b[^\n]*?(\d{4}-\d{2}-\d{2})\s+(\d{4}-\d{2}-\d{2})(?!\s+\d{5,6}\b)[^\n]*?Askant\s+Travel\s*(\d+)\s+TA(?:\s+([A-Za-z][A-Za-z &\/]+?))?(?:\s+(?:CONFIRMED|ON HOLD)|\s*$)/gim;
+  for (const m of text.matchAll(noVoucherRe)) {
+    const [, hid, a, d, r, mealRaw] = m;
+    const key = 'HID-' + hid;
+    if (result[key]) continue;
+    const n = parseInt(r, 10);
+    if (isNaN(n) || n <= 0 || n > 200) continue;
+    const meal = normalizeMeal(mealRaw || 'Room Only');
+    if (!result[key]) result[key] = { name: 'Group (Hotel ID: ' + hid + ')', from: ymd(a), till: ymd(d), rooms: 0, meal, roomType:null };
+    result[key].rooms += n;
+  }
+
+  if (Object.keys(result).length === 0) {
+    const genRe = /(\d{4}-\d{2}-\d{2})\s+(\d{4}-\d{2}-\d{2})\s+(\d{5,6})\b.*?(\d{1,2})\s*(?:\r?\n|$)/gm;
+    for (const m of text.matchAll(genRe)) {
+      const [, a, d, v, r] = m;
+      if (!result[v]) result[v] = { name:'', from:ymd(a), till:ymd(d), rooms: parseInt(r,10), roomType:null };
+    }
+  }
+
+  return result;
+}
+
+// ── SYSTEM FILE PARSER ─────────────────────────────────────────────────────────
+// Now also extracts roomType from patterns like "N - QUAD - R.O" or "N - DBL - Sohour"
+function parseSystemText(text) {
+  const out = [];
+  const boundary = /\bC\s+(\d{5,6})\s+(\d{2}\/\d{2}\/\d{4})\s+(\d{2}\/\d{2}\/\d{4})/gi;
+  const matches = [...text.matchAll(boundary)];
+
+  const isValyFile = /Madinah\s+Valley\s+HOTEL|Valy\s+Al\s+Madina/i.test(text);
+
+  for (let i = 0; i < matches.length; i++) {
+    const m = matches[i];
+    const [, rsv, from, till] = m;
+    const rowStart = m.index + m[0].length;
+    const rowEnd = i + 1 < matches.length ? matches[i + 1].index : rowStart + 600;
+    const rest = text.substring(rowStart, rowEnd);
+
+    const hotelM = rest.match(/(?:Ponsiana\s+Hotel(?:\s+\d+)?|Madinah\s+Valley\s+HOTEL)/i);
+    const hotel  = hotelM ? hotelM[0].trim() : (isValyFile ? 'Madinah Valley HOTEL' : 'Unknown Hotel');
+
+    // ── Strategy A: sum "N - ROOMTYPE" patterns & build full breakdown ──
+    const roomTypeRe = /(?<!\d)(\d{1,2})\s*-\s*(DBL|TPL|QUAD|SGL|TRP|QUD|TWN|KNG|TRIPLE|DOUBLE|SINGLE|TWIN|KING|SUITE)/gi;
+    const roomTypeMatches = [...rest.matchAll(roomTypeRe)];
+    let rooms = null;
+    let roomTypeRaw = null;
+    // roomTypeBreakdown: ordered list of normalized types, one per room
+    // e.g. [{type:'Double',count:2},{type:'Triple',count:1},{type:'Quad',count:4}]
+    const roomTypeBreakdown = [];
+    if (roomTypeMatches.length > 0) {
+      rooms = roomTypeMatches.reduce((sum, rm) => sum + parseInt(rm[1], 10), 0);
+      roomTypeRaw = roomTypeMatches[0][2];
+      for (const rm of roomTypeMatches) {
+        const nrt = normalizeRoomType(rm[2]);
+        if (nrt) roomTypeBreakdown.push({ type: nrt, count: parseInt(rm[1], 10) });
+      }
+    }
+
+    // Normalize the extracted room type
+    const roomType = roomTypeRaw ? normalizeRoomType(roomTypeRaw) : null;
+
+    // ── Extract meal plan ──
+    const mealRe = /(?:DBL|TPL|QUAD|SGL|TRP|QUD|TWN|KNG)\s*-\s*([^-\n\r]+?)\s*-\s*(?:City|city)/gi;
+    const mealMatches = [...rest.matchAll(mealRe)];
+    let meal = 'Room Only';
+    if (mealMatches.length > 0) {
+      meal = normalizeMeal(mealMatches[0][1].trim());
+    }
+
+    // ── Strategy B: number after last "view" ──
+    if (!rooms || rooms === 0) {
+      const lastView = rest.toLowerCase().lastIndexOf('view');
+      if (lastView !== -1) {
+        const afterView = rest.substring(lastView + 4).replace(/\d{6,}/g, '');
+        const numM = afterView.match(/(?<!\d)(\d{1,2})(?!\d)/);
+        if (numM) { const n = parseInt(numM[1], 10); if (n > 0 && n <= 50) rooms = n; }
+      }
+    }
+
+    // ── Strategy C: last standalone 1-2 digit number ──
+    if (!rooms || rooms === 0) {
+      const cleanRest = rest.replace(/\d{6,}/g, '');
+      const nums = [...cleanRest.matchAll(/(?<!\d)(\d{1,2})(?!\d)(?!\s*-)/g)];
+      for (let j = nums.length - 1; j >= 0; j--) {
+        const n = parseInt(nums[j][1], 10);
+        if (n > 0 && n <= 50) { rooms = n; break; }
+      }
+    }
+    if (!rooms || rooms <= 0) rooms = 1;
+
+    // ── Guest name extraction ──
+    // The PDF renders columns side-by-side, so the guest name is split across
+    // 2 lines: line1 has the first word(s) before "Madinah", line2 has the rest
+    // before "Valley". We collect both parts and join them.
+    let guest = rsv;
+    if (isValyFile) {
+      const rawLines = rest.split(/\r?\n/);
+      // Strip leading conf# tokens from line 1
+      let line1 = rawLines[0].replace(/^[\s]*(\d{4,6}[\s\-]*)+/, '').trim();
+      // Part1: everything before "Madinah" on line 1
+      const madIdx = line1.search(/\bMadinah\b/i);
+      let namePart1 = (madIdx >= 0 ? line1.substring(0, madIdx) : line1).trim();
+      namePart1 = namePart1.replace(/^[\s,\-]+|[\s,\-]+$/g, '').trim();
+
+      // Part2: from line 2, take everything before "Valley" or " - "
+      let namePart2 = '';
+      if (rawLines.length > 1) {
+        let line2 = rawLines[1].replace(/^(\d{4,6}[\s,]*)+/, '').trim();
+        const valIdx  = line2.search(/\bValley\b/i);
+        const dashIdx = line2.search(/\s+-\s+/);
+        let cut = -1;
+        if (valIdx  >= 0) cut = valIdx;
+        if (dashIdx >= 0 && (cut < 0 || dashIdx < cut)) cut = dashIdx;
+        namePart2 = (cut >= 0 ? line2.substring(0, cut) : line2).trim();
+        namePart2 = namePart2.replace(/^[\s,\-]+|[\s,\-]+$/g, '').trim();
+      }
+
+      const combined = (namePart1 + ' ' + namePart2).replace(/\s+/g, ' ').trim();
+      guest = combined || rsv;
+    } else {
+      // Ponsiana / other: guest name after htlRsv token, before hotel name
+      const restForGuest = rest;
+      const hotelIdx2 = hotelM ? restForGuest.indexOf(hotelM[0]) : -1;
+      if (hotelIdx2 > 0) {
+        const htlStr = (rest.match(/\b(sent|\d{4})\b/i) || [''])[0];
+        const afterTok = htlStr ? restForGuest.substring(restForGuest.indexOf(htlStr) + htlStr.length) : restForGuest;
+        const hiInAfter = hotelM ? afterTok.indexOf(hotelM[0]) : -1;
+        if (hiInAfter > 0) {
+          guest = afterTok.substring(0, hiInAfter).replace(/-\s*$/, '').replace(/\s+/g, ' ').trim() || rsv;
+        }
+      }
+    }
+
+    // ── MADINAH VALLEY: expand per 6-digit conf no ────────────────────────────
+    if (isValyFile) {
+      const confNos = [...rest.matchAll(/\b(1\d{5})\b/g)].map(m2 => m2[1]);
+      if (confNos.length === 0) {
+        out.push({ rsv, from, till, rooms, guest, hotel, htlRsv: 'sent', meal, roomType, sysRsv: rsv, roomTypeBreakdown });
+      } else {
+        // Assign room type per conf# using the breakdown order
+        // e.g. breakdown [{type:'Double',count:2},{type:'Triple',count:1},{type:'Quad',count:4}]
+        // conf#1→Double, conf#2→Double, conf#3→Triple, conf#4→Quad, conf#5→Quad ...
+        let bdIdx = 0, bdUsed = 0;
+        for (const confNo of confNos) {
+          let assignedType = roomType; // fallback to first type
+          if (roomTypeBreakdown.length > 1) {
+            while (bdIdx < roomTypeBreakdown.length && bdUsed >= roomTypeBreakdown[bdIdx].count) {
+              bdIdx++; bdUsed = 0;
+            }
+            if (bdIdx < roomTypeBreakdown.length) {
+              assignedType = roomTypeBreakdown[bdIdx].type;
+              bdUsed++;
+            }
+          }
+          out.push({ rsv: confNo, from, till, rooms: 1, guest, hotel, htlRsv: confNo, meal, roomType: assignedType, sysRsv: rsv, roomTypeBreakdown });
+        }
+      }
+      continue;
+    }
+
+    // ── PONSIANA HOTEL (original logic) ──────────────────────────────────────
+    const htlRsvM = rest.match(/\b(sent|\d{4})\b/i);
+    const htlRsv  = htlRsvM ? htlRsvM[1].toLowerCase() : 'sent';
+
+    const htlStr = htlRsvM ? htlRsvM[0] : '';
+    const afterHtlRsv = htlStr ? rest.substring(rest.indexOf(htlStr) + htlStr.length).trim() : rest;
+    const hotelIdxP = hotelM ? afterHtlRsv.indexOf(hotelM[0]) : -1;
+    const guestP = hotelIdxP > 0
+      ? afterHtlRsv.substring(0, hotelIdxP).replace(/-\s*$/, '').replace(/\s+/g, ' ').trim() || rsv
+      : rsv;
+
+    out.push({ rsv, from, till, rooms, guest: guestP, hotel, htlRsv, meal, roomType });
+  }
+
+  return out;
+}
+
+function ymd(s) { const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; }
+
+// ── IGNORE MISMATCH FLAGS ─────────────────────────────────────────────────────
+function getIgnoreFlags() {
+  return {
+    arrival:   document.getElementById('ignoreArrival')   ? document.getElementById('ignoreArrival').checked   : false,
+    departure: document.getElementById('ignoreDeparture') ? document.getElementById('ignoreDeparture').checked : false,
+    rooms:     document.getElementById('ignoreRooms')     ? document.getElementById('ignoreRooms').checked     : false,
+    meal:      document.getElementById('ignoreMeal')      ? document.getElementById('ignoreMeal').checked      : false,
+    guestName: document.getElementById('ignoreGuestName') ? document.getElementById('ignoreGuestName').checked : false,
+    roomType:  document.getElementById('ignoreRoomType')  ? document.getElementById('ignoreRoomType').checked  : false,
+  };
+}
+
+function applyIgnoreFlagsAndRender() {
+  const ign = getIgnoreFlags();
+  currentResults = rawResults.map(r => {
+    if (r.status === 'nohotel' || r.status === 'nosys') return r;
+    const visibleDiffs = (r._allDiffs || []).filter(d => {
+      if (ign.arrival   && d.f === 'Arrival')    return false;
+      if (ign.departure && d.f === 'Departure')  return false;
+      if (ign.rooms     && d.f === 'Rooms')      return false;
+      if (ign.meal      && d.f === 'Meal Plan')  return false;
+      if (ign.roomType  && d.f === 'Room Type')  return false;
+      if (ign.guestName && d.f === 'Guest Name') return false;
+      return true;
+    });
+    return { ...r, diffs: visibleDiffs, status: visibleDiffs.length ? 'diff' : 'match' };
+  });
+  renderResults();
+}
+
+function rerunIfHasResults() {
+  if (rawResults.length) applyIgnoreFlagsAndRender();
+}
+
+// ── CONFIRMED PAIRINGS ────────────────────────────────────────────────────────
+const confirmedPairings = {};
+
+// ── SMART COMPATIBILITY ENGINE ────────────────────────────────────────────────
+function scoreCompatibility(a, b) {
+  const matchTags = [];
+  const mismatchTags = [];
+
+  const arrivalMatch   = a.from  === b.from;
+  const departureMatch = a.till  === b.till;
+  const roomsMatch     = a.rooms === b.rooms;
+  const ma = (a.meal||'Room Only'), mb = (b.meal||'Room Only');
+  const mealMatch = ma === mb;
+
+  if (arrivalMatch)   matchTags.push('✓ Arrival');    else mismatchTags.push('✗ Arrival');
+  if (departureMatch) matchTags.push('✓ Departure');  else mismatchTags.push('✗ Departure');
+  if (roomsMatch)     matchTags.push('✓ Rooms');      else mismatchTags.push('✗ Rooms');
+  if (mealMatch)      matchTags.push('✓ Meal');       else mismatchTags.push('✗ Meal');
+
+  const qualifies = arrivalMatch && departureMatch && roomsMatch;
+  const score = qualifies ? (mealMatch ? 10 : 9) : 0;
+
+  return { score, matchTags, mismatchTags };
+}
+
+function findCompatible(record, pool, alreadyMatchedKeys) {
+  const candidates = [];
+  for (const { key, data } of pool) {
+    if (alreadyMatchedKeys.has(key)) continue;
+    const { score, matchTags, mismatchTags } = scoreCompatibility(record, data);
+    if (score > 0) {
+      candidates.push({ key, data, score, matchTags, mismatchTags });
+    }
+  }
+  candidates.sort((a, b) => b.score - a.score);
+  return candidates.slice(0, 3);
+}
+
+// ── COMPARISON ────────────────────────────────────────────────────────────────
+function runComparison() {
+  hotelMap   = {};
+  systemList = [];
+
+  for (const lf of loadedFiles) {
+    if (lf.type === 'hotel') {
+      const parsed = parseHotelText(lf.text);
+      for (const [v, d] of Object.entries(parsed)) {
+        hotelMap[v] = hotelMap[v] ? { ...hotelMap[v], rooms: hotelMap[v].rooms + d.rooms } : d;
+      }
+    } else if (lf.type === 'system') {
+      systemList.push(...parseSystemText(lf.text));
+    }
+  }
+
+  const hp = document.getElementById('hotelPaste').value.trim();
+  if (hp) Object.assign(hotelMap, parseHotelText(hp));
+  const sp = document.getElementById('systemPaste').value.trim();
+  if (sp) systemList.push(...parseSystemText(sp));
+
+  if (!Object.keys(hotelMap).length && !systemList.length) {
+    hotelMap   = Object.assign({}, HOTEL_DATA);
+    systemList = SYSTEM_DATA.map(r => Object.assign({}, r));
+  }
+
+  const results = [];
+
+  // Group system entries by RSV#
+  const sysGrouped = {};
+  for (const sys of systemList) {
+    if (!sysGrouped[sys.rsv]) {
+      sysGrouped[sys.rsv] = { ...sys };
+    } else {
+      sysGrouped[sys.rsv].rooms += sys.rooms;
+      if (sys.meal && sys.meal !== 'Room Only') sysGrouped[sys.rsv].meal = sys.meal;
+      // Keep roomType from first record that has one
+      if (!sysGrouped[sys.rsv].roomType && sys.roomType) sysGrouped[sys.rsv].roomType = sys.roomType;
+    }
+  }
+
+  const sysSet = new Set(Object.keys(sysGrouped));
+
+  for (const [rsv, sys] of Object.entries(sysGrouped)) {
+    const h = hotelMap[rsv];
+    if (!h) {
+      results.push({ status:'nohotel', sys, hotel:null, diffs:[] });
+    } else {
+      const diffs = [];
+      if (sys.from  !== h.from)  diffs.push({f:'Arrival',   sv:sys.from,  hv:h.from});
+      if (sys.till  !== h.till)  diffs.push({f:'Departure', sv:sys.till,  hv:h.till});
+      if (sys.rooms !== h.rooms) diffs.push({f:'Rooms',     sv:sys.rooms, hv:h.rooms});
+      // Guest name comparison — only when BOTH sides have real data
+      if (sys.guest && h.name) {
+        const sysGN = sys.guest.trim().toUpperCase();
+        const htlGN = h.name.trim().toUpperCase();
+
+        // Rule 1: Skip if system guest is just the RSV number (failed parse)
+        const isRsvFallback = /^\d+$/.test(sysGN);
+
+        // Rule 2: Skip if EITHER side contains the word "group" anywhere
+        // Hotel may label groups as "Askant Group 73", "Group 1", etc.
+        // System may say "Group" or "Group 03-Mar" — all are the same
+        const eitherIsGroup = /\bgroup\b/i.test(sysGN) || /\bgroup\b/i.test(htlGN);
+
+        // Rule 3: Skip if one name's meaningful words are all contained in the other
+        // Handles cases like:
+        //   "Anas Amir" vs "Anas Amir Abdul Rahim"  (hotel has partial name)
+        //   "B2B Norah ALKHATHLAN" vs "Norah ALKHATHLAN" (system has booking prefix)
+        // Strategy: strip non-name tokens (all-digit words, 1-3 char codes like B2B, REF)
+        // then check if all words of the shorter set exist in the longer set
+        const stripNoise = words => words.filter(w => w.length > 2 && !/^[A-Z0-9]{2,4}\d/.test(w) && !/^\d+$/.test(w));
+        const sysWords = stripNoise(sysGN.split(/\s+/).filter(Boolean));
+        const htlWords = stripNoise(htlGN.split(/\s+/).filter(Boolean));
+        const shorter  = sysWords.length <= htlWords.length ? sysWords : htlWords;
+        const longer   = sysWords.length <= htlWords.length ? htlWords : sysWords;
+        const longerSet = new Set(longer);
+        // All words of shorter name must exist in longer name (subset match)
+        const isSubsetMatch = shorter.length > 0 && shorter.every(w => longerSet.has(w));
+
+        if (!isRsvFallback && !eitherIsGroup && !isSubsetMatch && sysGN !== htlGN) {
+          diffs.push({f:'Guest Name', sv:sys.guest, hv:h.name});
+        }
+      }
+
+      // Room Type comparison — only when BOTH sides have room type data
+      if (sys.roomType && h.roomType) {
+        if (normalizeRoomType(sys.roomType) !== normalizeRoomType(h.roomType)) {
+          diffs.push({f:'Room Type', sv:sys.roomType, hv:h.roomType});
+        }
+      }
+
+      // Meal plan — only if hotel provides it
+      if (h.meal !== null) {
+        const sysMeal = sys.meal || 'Room Only';
+        const htlMeal = h.meal   || 'Room Only';
+        if (sysMeal !== htlMeal) diffs.push({f:'Meal Plan', sv:sysMeal, hv:htlMeal});
+      }
+
+      results.push({ status: diffs.length ? 'diff' : 'match', sys, hotel:h, diffs, _allDiffs: diffs.slice() });
+    }
+  }
+
+  for (const [v, h] of Object.entries(hotelMap)) {
+    if (!sysSet.has(v)) results.push({ status:'nosys', rsv:v, hotel:h, sys:null, diffs:[] });
+  }
+
+  // Smart Compatibility
+  const matchedSysKeys   = new Set(Object.keys(sysGrouped).filter(k => hotelMap[k]));
+  const matchedHotelKeys = new Set(Object.keys(hotelMap).filter(k => sysGrouped[k]));
+
+  const sysPool = results
+    .filter(r => r.status === 'nohotel')
+    .map(r => ({ key: r.sys.rsv, data: { from: r.sys.from, till: r.sys.till, rooms: r.sys.rooms, meal: r.sys.meal||'Room Only', name: r.sys.guest } }));
+
+  const hotelPool = results
+    .filter(r => r.status === 'nosys')
+    .map(r => ({ key: r.rsv, data: { from: r.hotel.from, till: r.hotel.till, rooms: r.hotel.rooms, meal: r.hotel.meal||'Room Only', name: r.hotel.name||r.rsv } }));
+
+  for (const r of results) {
+    if (r.status === 'nohotel') {
+      const rec = { from: r.sys.from, till: r.sys.till, rooms: r.sys.rooms, meal: r.sys.meal||'Room Only' };
+      r.maybeMatch = findCompatible(rec, hotelPool, matchedHotelKeys);
+    } else if (r.status === 'nosys') {
+      const rec = { from: r.hotel.from, till: r.hotel.till, rooms: r.hotel.rooms, meal: r.hotel.meal||'Room Only' };
+      r.maybeMatch = findCompatible(rec, sysPool, matchedSysKeys);
+    }
+  }
+
+  currentResults = results;
+  rawResults     = results;
+  currentFilter  = 'all';
+  currentSearch  = '';
+  applyIgnoreFlagsAndRender();
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderResults() {
+  const el = document.getElementById('results');
+  const all = currentResults;
+  if (!all.length) { el.innerHTML=''; return; }
+
+  const matched = all.filter(r=>r.status==='match');
+  const diffs   = all.filter(r=>r.status==='diff');
+  const nohotel = all.filter(r=>r.status==='nohotel');
+  const nosys   = all.filter(r=>r.status==='nosys');
+
+  let filtered = all;
+  if (currentFilter==='match')   filtered = matched;
+  if (currentFilter==='diff')    filtered = diffs;
+  if (currentFilter==='nohotel') filtered = nohotel;
+  if (currentFilter==='nosys')   filtered = nosys;
+
+  const diffSummary = diffs.map(r => {
+    const parts = r.diffs.map(d=>`${d.f}: System=${d.sv} vs Hotel=${d.hv}`).join(' | ');
+    return `#${r.sys.rsv} ${r.sys.guest}: ${parts}`;
+  }).join('\n');
+
+  const nohotelSummary = nohotel.map(r => `#${r.sys.rsv} ${r.sys.guest}`).join(', ');
+  const nosysSummary   = nosys.map(r => `#${r.rsv} ${r.hotel.name}`).join(', ');
+
+  const statActiveClass = (s) => currentFilter === s ? 'active-stat' : '';
+  const totalSysRsvs = all.filter(r=>r.status!=='nosys').length;
+
+  let html = `
+    <div class="results-hdr">
+      <div class="results-title">${t('resultsTitle', totalSysRsvs, Object.keys(hotelMap).length)}</div>
+    </div>
+    <div class="stats">
+      <div class="stat s-total ${statActiveClass('all')}" onclick="setFilter('all')" title="Show all">
+        <div class="num">${all.length}</div><div class="lbl">${t('statTotal')}</div>
+      </div>
+      <div class="stat s-match ${statActiveClass('match')}" onclick="setFilter('match')" title="Show matched">
+        <div class="num">${matched.length}</div><div class="lbl">${t('statMatch')}</div>
+      </div>
+      <div class="stat s-diff ${statActiveClass('diff')}" onclick="setFilter('diff')" title="Show differences">
+        <div class="num">${diffs.length}</div><div class="lbl">${t('statDiff')}</div>
+      </div>
+      <div class="stat s-nohotel ${statActiveClass('nohotel')}" onclick="setFilter('nohotel')" title="Show not in hotel">
+        <div class="num">${nohotel.length}</div><div class="lbl">${t('statNoHotel')}</div>
+      </div>
+      <div class="stat s-nosys ${statActiveClass('nosys')}" onclick="setFilter('nosys')" title="Show not in system">
+        <div class="num">${nosys.length}</div><div class="lbl">${t('statNoSys')}</div>
+      </div>
+    </div>`;
+
+  if (diffs.length || nohotel.length || nosys.length) {
+    html += `<div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">`;
+    if (diffs.length) {
+      html += `<span class="mismatch-chip" onclick="copyText(${JSON.stringify(diffSummary)},this)" title="Click to copy">
+        ${t('diffChipLabel', diffs.length, diffs.map(r=>`#${r.sys.rsv} [${r.diffs.map(d=>d.f).join(',')}]`).join(' · '))}
+        <span class="copy-icon">⧉</span>
+      </span>`;
+    }
+    if (nohotel.length) {
+      html += `<span class="mismatch-chip" style="border-color:rgba(255,71,87,.3);background:rgba(255,71,87,.07);color:var(--red);" onclick="copyText(${JSON.stringify('NOT IN HOTEL: '+nohotelSummary)},this)" title="Click to copy">
+        ✗ ${nohotel.length} Not in Hotel: ${nohotel.map(r=>`#${r.sys.rsv}`).join(' · ')}
+        <span class="copy-icon">⧉</span>
+      </span>`;
+    }
+    if (nosys.length) {
+      html += `<span class="mismatch-chip" style="border-color:rgba(179,136,255,.3);background:rgba(179,136,255,.07);color:var(--purple);" onclick="copyText(${JSON.stringify('NOT IN SYSTEM: '+nosysSummary)},this)" title="Click to copy">
+        ◈ ${nosys.length} Not in System: ${nosys.map(r=>`#${r.rsv}`).join(' · ')}
+        <span class="copy-icon">⧉</span>
+      </span>`;
+    }
+    html += `</div>`;
+  }
+
+  html += `<div class="export-bar">
+    <div class="export-bar-row">
+      <span class="export-bar-label">${t('exportLabel')}</span>
+      <button class="export-btn" onclick="exportText()">${t('exportText')}</button>
+      <button class="export-btn excel" onclick="exportExcel()">${t('exportExcel')}</button>
+      <button class="export-btn img" onclick="exportImage()">${t('exportImg')}</button>
+    </div>
+    <div class="export-sections-row">
+      <span class="export-sections-label">${t('chkInclude')}</span>
+      <label class="export-chk-group chk-match">
+        <input type="checkbox" id="chkMatch" checked>
+        <span class="chk-box"></span>
+        <span class="chk-label" style="color:var(--green)">${t('chkLblMatch')}</span>
+      </label>
+      <label class="export-chk-group chk-nohotel">
+        <input type="checkbox" id="chkNoHotel" checked>
+        <span class="chk-box"></span>
+        <span class="chk-label" style="color:var(--red)">${t('chkLblNoHotel')}</span>
+      </label>
+      <label class="export-chk-group chk-nosys">
+        <input type="checkbox" id="chkNoSys" checked>
+        <span class="chk-box"></span>
+        <span class="chk-label" style="color:var(--purple)">${t('chkLblNoSys')}</span>
+      </label>
+      <label class="export-chk-group chk-diff">
+        <input type="checkbox" id="chkDiff" checked>
+        <span class="chk-box"></span>
+        <span class="chk-label" style="color:var(--yellow)">${t('chkLblDiff')}</span>
+      </label>
+    </div>
+  </div>`;
+
+  html += `<input class="search-box" id="searchBox" type="text" placeholder="${t('searchPlaceholder')}" value="${currentSearch}" oninput="handleSearch(this.value)">
+  <div class="search-count" id="searchCount"></div>`;
+
+  const groups = [
+    {s:'diff',    items:filtered.filter(r=>r.status==='diff'),    label:t('sectionDiff'),    dot:'sd-diff'},
+    {s:'nohotel', items:filtered.filter(r=>r.status==='nohotel'), label:t('sectionNoHotel'), dot:'sd-nohotel'},
+    {s:'nosys',   items:filtered.filter(r=>r.status==='nosys'),   label:t('sectionNoSys'),   dot:'sd-nosys'},
+    {s:'match',   items:filtered.filter(r=>r.status==='match'),   label:t('sectionMatch'),   dot:'sd-match'},
+  ];
+
+  for (const g of groups) {
+    if (!g.items.length) continue;
+    html += `<div class="section-hdr"><div class="sdot ${g.dot}"></div><h3>${g.label} (${g.items.length})</h3></div>`;
+    for (const r of g.items) html += buildItem(r);
+  }
+
+  el.innerHTML = html;
+  if (currentSearch) handleSearch(currentSearch, false);
+}
+
+function buildItem(r) {
+  const bm = {match:'bd-match',diff:'bd-diff',nohotel:'bd-nohotel',nosys:'bd-nosys'};
+  const bt = {match:t('badgeMatch'), diff:t('badgeDiff'), nohotel:t('badgeNoHotel'), nosys:t('badgeNoSys')};
+  const rsv   = r.status==='nosys' ? r.rsv : r.sys.rsv;
+  const guest = r.status==='nosys' ? (r.hotel.name || r.rsv) : r.sys.guest;
+  const is6digit = /^\d{6}$/.test(rsv);
+  const displayRsv = rsv.startsWith('HID-')
+    ? '🏨 Hotel ID: ' + rsv.replace('HID-','')
+    : is6digit ? 'Conf# ' + rsv : '#' + rsv;
+  const hotel = r.sys ? r.sys.hotel : '';
+  const sysRsv = r.sys && r.sys.sysRsv ? r.sys.sysRsv : null;
+  const htlId = sysRsv
+    ? `Sys RSV: ${sysRsv}`
+    : (r.sys && r.sys.htlRsv && r.sys.htlRsv !== 'sent') ? t('hotelIdTag', r.sys.htlRsv) :
+      (r.sys && r.sys.htlRsv === 'sent') ? t('pending') : '';
+
+  let mismatchSummary = '';
+  if (r.status === 'diff' && r.diffs.length) {
+    const txt = r.diffs.map(d=>`${d.f}: ${d.sv}→${d.hv}`).join(' | ');
+    mismatchSummary = `<span class="mismatch-chip" style="font-size:0.62rem;padding:2px 7px;" onclick="event.stopPropagation();copyText(${JSON.stringify(txt)},this)" title="Click to copy">${txt} <span class="copy-icon">⧉</span></span>`;
+  }
+
+  let body = '';
+  if (r.status==='nohotel') {
+    const rtInfo = r.sys.roomType ? ` | ${r.sys.roomType}` : '';
+    body = `<div class="alert-msg red">${t('alertNoHotel', rsv, r.sys.from, r.sys.till, r.sys.rooms)}${rtInfo}</div>`;
+  } else if (r.status==='nosys') {
+    const rtInfo = r.hotel.roomType ? ` | ${r.hotel.roomType}` : '';
+    body = `<div class="alert-msg purple">${t('alertNoSys', rsv, r.hotel.from, r.hotel.till, r.hotel.rooms)}${rtInfo}</div>`;
+  } else {
+    body = `<table class="ctbl"><thead><tr><th>${t('tblField')}</th><th>${t('tblSystem')}</th><th>${t('tblHotel')}</th><th>${t('tblStatus')}</th></tr></thead><tbody>`;
+
+    // Standard fields
+    const compFields = [
+      {f:t('fieldArrival'), sv:r.sys.from,  hv:r.hotel.from},
+      {f:t('fieldDep'),     sv:r.sys.till,  hv:r.hotel.till},
+      {f:t('fieldRooms'),   sv:r.sys.rooms, hv:r.hotel.rooms},
+    ];
+
+    // Guest Name row — show if at least one side has data
+    const sysGN  = r.sys.guest  || null;
+    const hotelGN = r.hotel.name || null;
+    if (sysGN || hotelGN) {
+      compFields.push({
+        f: t('fieldGuestName'),
+        sv: sysGN   || '—',
+        hv: hotelGN || '—',
+        naOk: true
+      });
+    }
+
+    // Room Type row — always show if at least one side has data
+    const sysRT  = r.sys.roomType   || null;
+    const hotelRT = r.hotel.roomType || null;
+    if (sysRT || hotelRT) {
+      compFields.push({
+        f: t('fieldRoomType'),
+        sv: sysRT   || '—',
+        hv: hotelRT || '—',
+        naOk: true  // mark that N/A on one side is acceptable (don't flag as mismatch)
+      });
+    }
+
+    // Meal plan — only if hotel provides it
+    if (r.hotel.meal !== null) {
+      compFields.push({f:t('fieldMeal'), sv:r.sys.meal||'Room Only', hv:r.hotel.meal||'Room Only'});
+    }
+
+    for (const {f, sv, hv, naOk} of compFields) {
+      // Consider "—" (n/a) as neutral — don't flag as mismatch
+      const bothNA = sv === '—' || hv === '—';
+      const ok = String(sv) === String(hv) || (naOk && bothNA);
+      const sClass = bothNA ? 'v-na' : ok ? 'v-ok' : 'v-diff';
+      const hClass = bothNA ? 'v-na' : ok ? 'v-ok' : 'v-diff';
+      body += `<tr>
+        <td style="color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.7rem">${f}</td>
+        <td class="${sClass}">${sv}</td>
+        <td class="${hClass}">${hv}</td>
+        <td>${ok?'<span style="color:var(--green)">✓</span>':`<span style="color:var(--yellow)">${t('mismatch')}</span>`}</td>
+      </tr>`;
+    }
+
+    body += '</tbody></table>';
+    if (r.hotel && r.hotel.name)    body += `<div class="meta-row">${t('guestNameHotel')} <span>${r.hotel.name}</span></div>`;
+    if (r.hotel && r.hotel.roomNo)  body += `<div class="meta-row">Room No: <span>${r.hotel.roomNo}</span></div>`;
+    if (r.hotel && r.hotel.checkin) body += `<div class="meta-row">Checked In: <span>${r.hotel.checkin}</span></div>`;
+  }
+  if (htlId)  body += `<div class="meta-row">${t('confirmLabel')} <span>${htlId}</span></div>`;
+  if (hotel)  body += `<div class="meta-row">${t('hotelLabel2')} <span>${hotel}</span></div>`;
+
+  // Maybe Compatible Box
+  if ((r.status === 'nohotel' || r.status === 'nosys') && r.maybeMatch !== undefined) {
+    const pairKey = rsv;
+    const confirmedPartner = confirmedPairings[pairKey];
+
+    if (r.maybeMatch.length === 0) {
+      body += `<div class="maybe-box" style="border-color:rgba(255,71,87,0.35);background:rgba(255,71,87,0.04);">
+        <div class="maybe-box-hdr" style="color:#ff4757;margin-bottom:0;">
+          <span class="maybe-icon">🔍</span>
+          <span>No Compatible Entry Found</span>
+          <span style="font-size:0.65rem;color:var(--muted);font-weight:400;margin-left:6px;">— Arrival, Departure & Rooms don't match any unmatched entry</span>
+        </div>
+      </div>`;
+    } else {
+      body += `<div class="maybe-box">
+        <div class="maybe-box-hdr">
+          <span class="maybe-icon">🔍</span>
+          <span>Maybe Compatible With:</span>
+        </div>
+        <div class="maybe-candidates">`;
+
+      for (const cand of r.maybeMatch) {
+        const isConfirmed = confirmedPairings[pairKey] === cand.key;
+        const candLabel = cand.key.startsWith('HID-')
+          ? 'Hotel ID: ' + cand.key.replace('HID-','')
+          : (r.status === 'nohotel' ? '🏨 Hotel #' : '🖥 System #') + cand.key;
+        const candName = cand.data.name || '';
+        const details  = `${cand.data.from} → ${cand.data.till} | ${cand.data.rooms} room(s) | ${cand.data.meal||'Room Only'}`;
+
+        body += `<div class="maybe-candidate ${isConfirmed ? 'confirmed' : ''}" id="maybecard-${pairKey}-${cand.key}" onclick="toggleCompatible(event,'${pairKey}','${cand.key}')">
+          <div class="maybe-chk-wrap"><div class="maybe-chk" id="maybechk-${pairKey}-${cand.key}"></div></div>
+          <div class="maybe-info">
+            <div class="maybe-rsv">${candLabel}${candName ? ' — ' + candName : ''}</div>
+            <div class="maybe-details">${details}</div>
+            <div class="maybe-score">
+              ${cand.matchTags.map(tag => `<span class="score-tag">${tag}</span>`).join('')}
+              ${cand.mismatchTags.map(tag => `<span class="score-tag no">${tag}</span>`).join('')}
+            </div>
+          </div>
+        </div>`;
+      }
+
+      const confirmedBannerTxt = confirmedPartner
+        ? `✓ Confirmed — linked to ${confirmedPartner.startsWith('HID-') ? 'Hotel ID: '+confirmedPartner.replace('HID-','') : (r.status==='nohotel'?'Hotel #':'System #')+confirmedPartner}`
+        : '';
+      body += `</div>
+        <div class="confirmed-banner ${confirmedPartner ? 'visible' : ''}" id="confirmedbanner-${pairKey}">
+          ✅ ${confirmedBannerTxt}
+        </div>
+      </div>`;
+    }
+  }
+
+  return `<div class="result-item st-${r.status}" data-rsv="${rsv}" data-name="${guest.toLowerCase()}">
+    <div class="result-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="rsv-num">${displayRsv}</div>
+      ${rsv.startsWith('HID-') ? '' : `<button class="rsv-copy-btn" onclick="copyRsvNum(event, '${rsv}')" title="Copy reservation number">⎘</button>`}
+      <div class="guest-name">${guest}</div>
+      ${mismatchSummary}
+      <div class="htl-tag">${htlId}</div>
+      <span class="badge ${bm[r.status]}">${bt[r.status]}</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="result-body">${body}</div>
+  </div>`;
+}
+
+function copyRsvNum(e, num) {
+  e.stopPropagation();
+  const btn = e.currentTarget;
+  navigator.clipboard.writeText(num).catch(() => {}).finally(() => {
+    btn.textContent = '✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '⎘'; btn.classList.remove('copied'); }, 1500);
+  });
+}
+
+// ── COMPATIBLE PAIRING TOGGLE ─────────────────────────────────────────────────
+function toggleCompatible(e, pairKey, candKey) {
+  e.stopPropagation();
+  const isNowConfirmed = confirmedPairings[pairKey] !== candKey;
+
+  const oldPartner = confirmedPairings[pairKey];
+  if (oldPartner) {
+    delete confirmedPairings[oldPartner];
+    delete confirmedPairings[pairKey];
+    const oldCard = document.getElementById('maybecard-' + oldPartner + '-' + pairKey);
+    if (oldCard) oldCard.classList.remove('confirmed');
+    const oldBanner = document.getElementById('confirmedbanner-' + oldPartner);
+    if (oldBanner) { oldBanner.classList.remove('visible'); oldBanner.textContent = ''; }
+  }
+
+  document.querySelectorAll(`[id^="maybecard-${pairKey}-"]`).forEach(el => el.classList.remove('confirmed'));
+
+  if (isNowConfirmed) {
+    confirmedPairings[pairKey] = candKey;
+    confirmedPairings[candKey] = pairKey;
+
+    const thisCard = document.getElementById('maybecard-' + pairKey + '-' + candKey);
+    if (thisCard) thisCard.classList.add('confirmed');
+
+    const revCard = document.getElementById('maybecard-' + candKey + '-' + pairKey);
+    if (revCard) revCard.classList.add('confirmed');
+
+    const thisKeyLabel  = pairKey.startsWith('HID-') ? 'Hotel ID: '+pairKey.replace('HID-','') : '#'+pairKey;
+    const candKeyLabel  = candKey.startsWith('HID-') ? 'Hotel ID: '+candKey.replace('HID-','') : '#'+candKey;
+
+    const thisBanner = document.getElementById('confirmedbanner-' + pairKey);
+    if (thisBanner) { thisBanner.innerHTML = '✅ Confirmed — linked to ' + candKeyLabel; thisBanner.classList.add('visible'); }
+    const partnerBanner = document.getElementById('confirmedbanner-' + candKey);
+    if (partnerBanner) { partnerBanner.innerHTML = '✅ Confirmed — linked to ' + thisKeyLabel; partnerBanner.classList.add('visible'); }
+  }
+}
+
+function setFilter(f) { currentFilter=f; renderResults(); }
+
+function handleSearch(v, updateState=true) {
+  if (updateState) currentSearch = v;
+  v = v.toLowerCase();
+  const items = document.querySelectorAll('.result-item');
+  let visible = 0;
+  items.forEach(el => {
+    const show = !v || (el.dataset.rsv||'').includes(v) || (el.dataset.name||'').includes(v);
+    el.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  const countEl = document.getElementById('searchCount');
+  if (countEl) {
+    if (v) { countEl.textContent = t('searchCount', visible, v); countEl.classList.add('visible'); }
+    else { countEl.classList.remove('visible'); }
+  }
+  document.querySelectorAll('.section-hdr').forEach(hdr => {
+    let next = hdr.nextElementSibling;
+    let anyVisible = false;
+    while (next && next.classList.contains('result-item')) {
+      if (next.style.display !== 'none') anyVisible = true;
+      next = next.nextElementSibling;
+    }
+    hdr.style.display = anyVisible ? '' : 'none';
+  });
+}
+
+function copyText(txt, el) {
+  navigator.clipboard.writeText(txt).then(() => {
+    const orig = el.innerHTML;
+    el.innerHTML = el.innerHTML.replace('⧉','✓ Copied!');
+    setTimeout(()=>{ el.innerHTML = orig; }, 1500);
+  }).catch(()=> toast('Copy failed — please copy manually'));
+}
+
+function getExportSections() {
+  return {
+    matched: document.getElementById('chkMatch')   ? document.getElementById('chkMatch').checked   : true,
+    nohotel: document.getElementById('chkNoHotel') ? document.getElementById('chkNoHotel').checked : true,
+    nosys:   document.getElementById('chkNoSys')   ? document.getElementById('chkNoSys').checked   : true,
+    diffs:   document.getElementById('chkDiff')    ? document.getElementById('chkDiff').checked    : true,
+  };
+}
+
+function buildReportText() {
+  const all     = currentResults;
+  const diffs   = all.filter(r=>r.status==='diff');
+  const nohotel = all.filter(r=>r.status==='nohotel');
+  const nosys   = all.filter(r=>r.status==='nosys');
+  const matched = all.filter(r=>r.status==='match');
+  const now = new Date().toLocaleString();
+  const sel = getExportSections();
+
+  let txt = `RESERVATION COMPARISON REPORT\n`;
+  txt += `Generated: ${now}\n`;
+  txt += `${'='.repeat(60)}\n\n`;
+  txt += `SUMMARY\n${'-'.repeat(40)}\n`;
+  txt += `Total Entries  : ${all.length}\n`;
+  if (sel.matched) txt += `Matched        : ${matched.length}\n`;
+  if (sel.diffs)   txt += `Differences    : ${diffs.length}\n`;
+  if (sel.nohotel) txt += `Not in Hotel   : ${nohotel.length}\n`;
+  if (sel.nosys)   txt += `Not in System  : ${nosys.length}\n`;
+  txt += `\n`;
+
+  if (sel.diffs && diffs.length) {
+    txt += `DIFFERENCES (${diffs.length})\n${'-'.repeat(40)}\n`;
+    diffs.forEach(r => {
+      txt += `RSV# ${r.sys.rsv} — ${r.sys.guest}\n`;
+      r.diffs.forEach(d => txt += `  • ${d.f}: System="${d.sv}" vs Hotel="${d.hv}"\n`);
+      txt += `\n`;
+    });
+  }
+
+  if (sel.nohotel && nohotel.length) {
+    txt += `IN SYSTEM · NOT IN HOTEL (${nohotel.length})\n${'-'.repeat(40)}\n`;
+    nohotel.forEach(r => {
+      const rt = r.sys.roomType ? ` | ${r.sys.roomType}` : '';
+      txt += `  RSV# ${r.sys.rsv} — ${r.sys.guest} | ${r.sys.from}→${r.sys.till} | ${r.sys.rooms} room(s)${rt}\n`;
+    });
+    txt += `\n`;
+  }
+
+  if (sel.nosys && nosys.length) {
+    txt += `IN HOTEL · NOT IN SYSTEM (${nosys.length})\n${'-'.repeat(40)}\n`;
+    nosys.forEach(r => {
+      const rt = r.hotel.roomType ? ` | ${r.hotel.roomType}` : '';
+      txt += `  Voucher ${r.rsv} — ${r.hotel.name} | ${r.hotel.from}→${r.hotel.till} | ${r.hotel.rooms} room(s)${rt}\n`;
+    });
+    txt += `\n`;
+  }
+
+  if (sel.matched && matched.length) {
+    txt += `MATCHED (${matched.length})\n${'-'.repeat(40)}\n`;
+    matched.forEach(r => {
+      const rt = r.sys.roomType ? ` | ${r.sys.roomType}` : '';
+      txt += `  RSV# ${r.sys.rsv} — ${r.sys.guest}${rt}\n`;
+    });
+  }
+
+  return txt;
+}
+
+function exportText() {
+  const txt = buildReportText();
+  const blob = new Blob([txt], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `Comparison_Report_${new Date().toISOString().slice(0,10)}.txt`;
+  a.click();
+  toast(t('toastText'));
+}
+
+function exportExcel() {
+  const all     = currentResults;
+  const now     = new Date().toLocaleString();
+  const sel     = getExportSections();
+
+  const exportRows = all.filter(r => {
+    if (r.status === 'match'   && !sel.matched) return false;
+    if (r.status === 'diff'    && !sel.diffs)   return false;
+    if (r.status === 'nohotel' && !sel.nohotel) return false;
+    if (r.status === 'nosys'   && !sel.nosys)   return false;
+    return true;
+  });
+
+  function doXlsx(XLSX) {
+    const wb = XLSX.utils.book_new();
+
+    const matched = all.filter(r=>r.status==='match');
+    const diffs   = all.filter(r=>r.status==='diff');
+    const nohotel = all.filter(r=>r.status==='nohotel');
+    const nosys   = all.filter(r=>r.status==='nosys');
+    const summaryRows = [
+      ['Reservation Comparison Report'],
+      [`Generated: ${now}`],
+      [],
+      ['SUMMARY',''],
+      ['Total Entries', all.length],
+    ];
+    if (sel.matched) summaryRows.push(['Matched', matched.length]);
+    if (sel.diffs)   summaryRows.push(['Differences', diffs.length]);
+    if (sel.nohotel) summaryRows.push(['Not in Hotel', nohotel.length]);
+    if (sel.nosys)   summaryRows.push(['Not in System', nosys.length]);
+    const wsSummary = XLSX.utils.aoa_to_sheet(summaryRows);
+    XLSX.utils.book_append_sheet(wb, wsSummary, 'Summary');
+
+    // Now includes Room Type column and Guest Name (Hotel) column
+    const headers = ['RSV#','Guest Name (System)','Guest Name (Hotel)','Hotel','Status','Arrival (System)','Arrival (Hotel)','Departure (System)','Departure (Hotel)','Rooms (System)','Rooms (Hotel)','Room Type (System)','Room Type (Hotel)','Diff Fields','Hotel Confirmation'];
+    const dataRows = [headers];
+    exportRows.forEach(r => {
+      const rsv    = r.status==='nosys' ? r.rsv        : r.sys.rsv;
+      const guest  = r.status==='nosys' ? r.hotel.name : r.sys.guest;
+      const hotel  = r.sys ? r.sys.hotel : '';
+      const htlId  = r.sys ? r.sys.htlRsv : '';
+      const status = {match:'MATCH',diff:'DIFF',nohotel:'NOT IN HOTEL',nosys:'NOT IN SYSTEM'}[r.status];
+      const sFrom  = r.sys   ? r.sys.from   : '';
+      const sTill  = r.sys   ? r.sys.till   : '';
+      const sRooms = r.sys   ? r.sys.rooms  : '';
+      const sRT    = r.sys   ? (r.sys.roomType || '') : '';
+      const hFrom  = r.hotel ? r.hotel.from : '';
+      const hTill  = r.hotel ? r.hotel.till : '';
+      const hRooms = r.hotel ? r.hotel.rooms : '';
+      const hRT    = r.hotel ? (r.hotel.roomType || '') : '';
+      const hGuest = r.hotel ? (r.hotel.name || '') : '';
+      const diffFields = r.diffs ? r.diffs.map(d=>d.f).join('; ') : '';
+      dataRows.push([rsv,guest,hGuest,hotel,status,sFrom,hFrom,sTill,hTill,sRooms,hRooms,sRT,hRT,diffFields,htlId]);
+    });
+    const wsData = XLSX.utils.aoa_to_sheet(dataRows);
+    wsData['!cols'] = [14,28,28,18,16,16,16,18,18,14,14,14,14,20,20].map(w=>({wch:w}));
+    XLSX.utils.book_append_sheet(wb, wsData, 'Reservations');
+    XLSX.writeFile(wb, `Comparison_Report_${new Date().toISOString().slice(0,10)}.xlsx`);
+    toast(t('toastExcel'));
+  }
+
+  if (window.XLSX) {
+    doXlsx(window.XLSX);
+  } else {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = () => doXlsx(window.XLSX);
+    s.onerror = () => toast('Could not load XLSX library. Check your internet connection.');
+    document.head.appendChild(s);
+  }
+}
+
+function exportImage() {
+  const all     = currentResults;
+  const diffs   = all.filter(r=>r.status==='diff');
+  const nohotel = all.filter(r=>r.status==='nohotel');
+  const nosys   = all.filter(r=>r.status==='nosys');
+  const matched = all.filter(r=>r.status==='match');
+  const sel     = getExportSections();
+
+  const showDiffs   = sel.diffs   && diffs.length;
+  const showNohotel = sel.nohotel && nohotel.length;
+  const showNosys   = sel.nosys   && nosys.length;
+  const showMatched = sel.matched && matched.length;
+
+  const canvas = document.createElement('canvas');
+  const scale  = 2;
+  const W = 900, rowH = 28, pad = 28;
+  const headerH  = 180;
+  const summaryH = 130;
+  const diffH   = showDiffs   ? 50 + diffs.length * 50   : 0;
+  const nhH     = showNohotel ? 40 + nohotel.length * rowH : 0;
+  const nsH     = showNosys   ? 40 + nosys.length * rowH  : 0;
+  const matchH  = showMatched ? 40 + matched.length * rowH : 0;
+  const totalH  = headerH + summaryH + diffH + nhH + nsH + matchH + pad*3;
+
+  canvas.width  = W * scale;
+  canvas.height = totalH * scale;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(scale, scale);
+
+  ctx.fillStyle = '#07090f';
+  ctx.fillRect(0, 0, W, totalH);
+
+  ctx.fillStyle = '#0f1623';
+  ctx.fillRect(0, 0, W, headerH - 10);
+  ctx.strokeStyle = '#243347';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, headerH-10); ctx.lineTo(W, headerH-10); ctx.stroke();
+
+  ctx.font = 'bold 22px IBM Plex Sans, sans-serif';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('Reservation', pad, 45);
+  ctx.fillStyle = '#00c8ff';
+  ctx.fillText('Comparison', pad + 150, 45);
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('Report', pad + 304, 45);
+
+  ctx.font = '12px IBM Plex Mono, monospace';
+  ctx.fillStyle = '#5a7490';
+  ctx.fillText(`Generated: ${new Date().toLocaleString()}`, pad, 68);
+  ctx.fillText(`Askant Travel · System Files vs Hotel File`, pad, 86);
+
+  const stats = [
+    {label:'TOTAL',       val:all.length,     color:'#00c8ff'},
+    {label:'MATCHED',     val:matched.length, color:'#00e676'},
+    {label:'DIFFERENCES', val:diffs.length,   color:'#ffd600'},
+    {label:'NOT IN HOTEL',val:nohotel.length, color:'#ff4757'},
+    {label:'NOT IN SYS',  val:nosys.length,   color:'#b388ff'},
+  ];
+  const bW = (W - pad*2 - 8*4) / 5;
+  stats.forEach((s, i) => {
+    const x = pad + i*(bW+8);
+    const y = headerH;
+    ctx.fillStyle = '#0f1623';
+    ctx.strokeStyle = '#243347';
+    roundRect(ctx, x, y, bW, 80, 8);
+    ctx.fill(); ctx.stroke();
+    ctx.font = 'bold 28px IBM Plex Mono, monospace';
+    ctx.fillStyle = s.color;
+    ctx.textAlign = 'center';
+    ctx.fillText(s.val, x+bW/2, y+42);
+    ctx.font = '9px IBM Plex Mono, monospace';
+    ctx.fillStyle = '#5a7490';
+    ctx.fillText(s.label, x+bW/2, y+60);
+    ctx.textAlign = 'left';
+  });
+
+  let y = headerH + summaryH;
+
+  function sectionHeader(label, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(pad, y+6, 6, 6);
+    ctx.font = 'bold 11px IBM Plex Mono, monospace';
+    ctx.fillStyle = '#5a7490';
+    ctx.fillText(label.toUpperCase(), pad+14, y+15);
+    ctx.strokeStyle = '#243347';
+    ctx.beginPath(); ctx.moveTo(pad, y+22); ctx.lineTo(W-pad, y+22); ctx.stroke();
+    y += 32;
+  }
+
+  function tableRow(cols, colors, bold=false) {
+    ctx.font = `${bold?'bold ':''} 11px IBM Plex Mono, monospace`;
+    const colW = [(W-pad*2)*0.10, (W-pad*2)*0.20, (W-pad*2)*0.12, (W-pad*2)*0.12, (W-pad*2)*0.12, (W-pad*2)*0.12, (W-pad*2)*0.22];
+    let x2 = pad;
+    cols.forEach((c,i) => {
+      ctx.fillStyle = colors[i] || '#dde6f0';
+      ctx.fillText(String(c).substring(0,26), x2, y+14);
+      x2 += colW[i];
+    });
+    y += rowH;
+  }
+
+  if (showDiffs) {
+    sectionHeader(`Differences (${diffs.length})`, '#ffd600');
+    tableRow(['RSV#','Guest','Arrival','Departure','Rooms (Sys)','Rooms (Htl)','Room Type'],
+             ['#5a7490','#5a7490','#5a7490','#5a7490','#5a7490','#5a7490','#5a7490'], true);
+    diffs.forEach(r => {
+      const rSys = r.sys.rooms, rHtl = r.hotel.rooms;
+      const sRT = r.sys.roomType || '—';
+      const hRT = r.hotel.roomType || '—';
+      const rtColor = (sRT!=='—' && hRT!=='—' && sRT!==hRT) ? '#ffd600' : '#00e676';
+      tableRow(
+        [`#${r.sys.rsv}`, r.sys.guest.substring(0,18), r.sys.from, r.sys.till, rSys, rHtl, `${sRT}/${hRT}`],
+        ['#00c8ff','#dde6f0',
+         r.sys.from!==r.hotel.from?'#ffd600':'#00e676',
+         r.sys.till!==r.hotel.till?'#ffd600':'#00e676',
+         rSys!==rHtl?'#ffd600':'#00e676',
+         rSys!==rHtl?'#ffd600':'#00e676',
+         rtColor]
+      );
+    });
+    y += 10;
+  }
+
+  if (showNohotel) {
+    sectionHeader(`Not in Hotel (${nohotel.length})`, '#ff4757');
+    nohotel.forEach(r => {
+      const rt = r.sys.roomType || '—';
+      tableRow([`#${r.sys.rsv}`, r.sys.guest.substring(0,22), r.sys.from, r.sys.till, r.sys.rooms, '-', rt],
+        ['#00c8ff','#ff4757','#dde6f0','#dde6f0','#dde6f0','#5a7490','#5a7490']);
+    });
+    y += 10;
+  }
+
+  if (showNosys) {
+    sectionHeader(`Not in System (${nosys.length})`, '#b388ff');
+    nosys.forEach(r => {
+      const rt = r.hotel.roomType || '—';
+      tableRow([`#${r.rsv}`, r.hotel.name.substring(0,22), r.hotel.from, r.hotel.till, '-', r.hotel.rooms, rt],
+        ['#00c8ff','#b388ff','#dde6f0','#dde6f0','#5a7490','#dde6f0','#5a7490']);
+    });
+    y += 10;
+  }
+
+  if (showMatched) {
+    sectionHeader(`Matched (${matched.length})`, '#00e676');
+    matched.forEach(r => {
+      const rt = r.sys.roomType || r.hotel.roomType || '—';
+      tableRow([`#${r.sys.rsv}`, r.sys.guest.substring(0,22), r.sys.from, r.sys.till, r.sys.rooms, r.hotel.rooms, rt],
+        ['#00c8ff','#dde6f0','#00e676','#00e676','#00e676','#00e676','#00e676']);
+    });
+  }
+
+  canvas.toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `Comparison_Report_${new Date().toISOString().slice(0,10)}.png`;
+    a.click();
+    toast(t('toastImg'));
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y); ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w, y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r, y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x, y+r); ctx.arcTo(x,y,x+r,y,r);
+  ctx.closePath();
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function toast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText='position:fixed;bottom:22px;right:22px;background:#1a2236;border:1px solid #243347;color:#dde6f0;padding:9px 16px;border-radius:8px;font-size:0.77rem;font-family:\'IBM Plex Mono\',monospace;z-index:9999;opacity:0;transition:opacity .3s;max-width:320px;';
+  t.textContent=msg; document.body.appendChild(t);
+  requestAnimationFrame(()=>t.style.opacity='1');
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},3000);
+}
+
+// ── SMART MULTI-FILE DROP ZONE ────────────────────────────────────────────────
+let loadedFiles = [];
+
+function guessFileType(filename) {
+  const n = filename.toLowerCase();
+  if (n.includes('hotel') || n.includes('hotal') || n.includes('voucher') || n.includes('htl')) return 'hotel';
+  if (n.includes('system') || n.includes('sys') || n.includes('rsv') || n.includes('reservation')) return 'system';
+  return 'unknown';
+}
+
+function renderFileTags() {
+  const wrap = document.getElementById('fileTagsWrap');
+  const inner = document.getElementById('dropInner');
+  const tagsEl = document.getElementById('fileTags');
+  if (!loadedFiles.length) {
+    wrap.style.display = 'none';
+    inner.style.display = '';
+    return;
+  }
+  inner.style.display = 'none';
+  wrap.style.display = '';
+  tagsEl.innerHTML = loadedFiles.map((lf, i) => {
+    const cls = lf.type === 'hotel' ? 'hotel-tag' : lf.type === 'system' ? 'system-tag' : 'unknown-tag';
+    const icon = lf.type === 'hotel' ? '🏨' : lf.type === 'system' ? '🖥' : '❓';
+    return `<div class="file-tag ${cls}" id="ftag-${i}">
+      <span>${icon}</span>
+      <select class="type-select" onchange="changeFileType(${i},this.value)">
+        <option value="hotel" ${lf.type==='hotel'?'selected':''}>Hotel</option>
+        <option value="system" ${lf.type==='system'?'selected':''}>System</option>
+      </select>
+      <span class="tag-name" title="${lf.file.name}">${lf.file.name}</span>
+      <button class="tag-rm" onclick="removeLoadedFile(${i})" title="Remove">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function changeFileType(idx, newType) {
+  if (loadedFiles[idx]) { loadedFiles[idx].type = newType; renderFileTags(); }
+}
+
+function removeLoadedFile(idx) {
+  loadedFiles.splice(idx, 1);
+  renderFileTags();
+}
+
+async function processSmartFiles(files) {
+  for (const file of files) {
+    const type = guessFileType(file.name);
+    let text = '';
+    try {
+      if (file.name.toLowerCase().endsWith('.pdf')) {
+        text = await extractPdfText(file);
+      } else {
+        text = await file.text();
+      }
+    } catch(e) {
+      toast('Could not read: ' + file.name);
+      continue;
+    }
+    let finalType = type;
+    if (type === 'unknown') {
+      const lower = text.toLowerCase();
+      if (lower.includes('askant travel') || lower.includes('voucher no')) finalType = 'hotel';
+      else if (lower.includes('ponsiana hotel') && lower.match(/\bC\s+\d{5,6}\b/)) finalType = 'system';
+    }
+    loadedFiles.push({ file, type: finalType, text });
+  }
+  renderFileTags();
+  toast(`${files.length} file(s) loaded. Check types above then click Run Comparison.`);
+}
+
+function initSmartDrop() {
+  const zone = document.getElementById('smartDrop');
+  const inp  = document.getElementById('smartFileInput');
+
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) processSmartFiles([...e.dataTransfer.files]);
+  });
+
+  inp.addEventListener('change', e => {
+    if (e.target.files.length) {
+      processSmartFiles([...e.target.files]);
+      e.target.value = '';
+    }
+  });
+}
+
+// ── LANGUAGE TOGGLE ──────────────────────────────────────────────────────────
+let currentLang = 'en';
+
+const TRANSLATIONS = {
+  en: {
+    mainTitle:      'ALTANTAWY <span>Comparison</span> Tool',
+    mainSubtitle:   'FOR VALY AL MADINA HOTEL',
+    langBtn:        '🌐 عربي',
+    btnClear:       '🗑 Clear All & Reset',
+    compareBtn:     '⚡ Run Comparison',
+    dropTitle:      'Drop files here or <span class="drop-link" onclick="document.getElementById(&apos;smartFileInput&apos;).click()">browse</span>',
+    dropSub:        'Select both Hotel & System files at once — app auto-detects type',
+    dropFormats:    'PDF · TXT · CSV &nbsp;·&nbsp; Multiple files supported',
+    addMoreBtn:     '＋ Add More Files',
+    powerTag:       '⚡ THIS APP IS POWERED BY',
+    searchPlaceholder: 'Search by RSV# or guest name...',
+    sectionDiff:    'Differences Found',
+    sectionNoHotel: 'In System · Not in Hotel',
+    sectionNoSys:   'In Hotel · Not in System',
+    sectionMatch:   'Matched',
+    badgeMatch:     '✓ MATCH',
+    badgeDiff:      '⚠ DIFF',
+    badgeNoHotel:   '✗ NOT IN HOTEL',
+    badgeNoSys:     '◈ NOT IN SYSTEM',
+    exportLabel:    'Export:',
+    exportText:     '📄 Text Report',
+    exportExcel:    '📊 Excel',
+    exportImg:      '🖼 Image',
+    pending:        'Pending confirmation',
+    hotelLabel:     'Hotel File(s)',
+    hotelTitle:     '🏨 Hotel Main File',
+    sysLabel:       'System File(s)',
+    sysTitle:       '🖥 System Files',
+    addHotel:       '＋ Add Hotel File Manually',
+    addSys:         '＋ Add System File Manually',
+    pasteHotel:     'Or paste hotel text',
+    pasteSys:       'Or paste system text',
+    pasteHotelPh:   'Paste hotel reservation text here...',
+    pasteSysPh:     'Paste system reservation text here...',
+    slotHotelLbl:   'Hotel file — click or drag & drop',
+    slotSysLbl:     'System file — click or drag & drop',
+    hotelIdTag:     id => `Hotel ID: ${id}`,
+    guestNameHotel: 'Guest Name (Hotel):',
+    confirmLabel:   'Confirmation:',
+    hotelLabel2:    'Hotel:',
+    diffChipLabel:  (n,ids) => `⚠ ${n} Difference${n>1?'s':''}: ${ids}`,
+    fieldArrival:   'Arrival', fieldDep:'Departure', fieldRooms:'Rooms',
+    fieldRoomType:  'Room Type',
+    fieldGuestName: 'Guest Name',
+    fieldMeal:      'Meal Plan',
+    ignorePanelTitle: 'IGNORE MISMATCH',
+    ignorePanelDesc:  'Checked fields will be skipped — results update instantly',
+    ignoreArrivalLbl: '📅 Arrival',
+    ignoreDepartureLbl: '📅 Departure',
+    ignoreRoomsLbl:   '🛏 Rooms',
+    ignoreMealLbl:    '🍽 Meal Plan',
+    ignoreRoomTypeLbl:'🏠 Room Type',
+    tblField:       'Field', tblSystem:'System', tblHotel:'Hotel', tblStatus:'Status',
+    statTotal:      'Total', statMatch:'Matched', statDiff:'Differences', statNoHotel:'Not in Hotel', statNoSys:'Not in System',
+    chkInclude:     'Include:',
+    chkLblMatch:    'Matched', chkLblNoHotel:'Not in Hotel', chkLblNoSys:'Not in System', chkLblDiff:'Differences',
+    resultsTitle:   (sys,htl) => `// ${sys} system records vs ${htl} hotel confirmations`,
+    alertNoHotel:   (rsv,from,till,rooms) => `⚠ Conf# ${rsv} found in System but NOT in Hotel file.<br>System: ${from} → ${till} | ${rooms} room(s)`,
+    alertNoSys:     (rsv,from,till,rooms) => `◈ Conf# ${rsv} found in Hotel file but NOT in System.<br>Hotel: ${from} → ${till} | ${rooms} room(s)`,
+    mismatch:       '⚠ MISMATCH',
+    searchCount:    (n,v) => `${n} result${n!==1?'s':''} matching "${v}"`,
+    toastReset:     'Reset complete — ready for new comparison',
+    toastText:      'Text report downloaded',
+    toastExcel:     'Excel report downloaded',
+    toastImg:       'Image report downloaded',
+  },
+  ar: {
+    mainTitle:      'أداة <span>المقارنة</span> ALTANTAWY',
+    mainSubtitle:   'لفندق فالي المدينة',
+    langBtn:        '🌐 English',
+    btnClear:       '🗑 مسح الكل وإعادة التعيين',
+    compareBtn:     '⚡ تشغيل المقارنة',
+    dropTitle:      'أفلت الملفات هنا أو <span class="drop-link" onclick="document.getElementById(&apos;smartFileInput&apos;).click()">تصفح</span>',
+    dropSub:        'اختر ملفات الفندق والنظام معاً — التطبيق يحدد النوع تلقائياً',
+    dropFormats:    'PDF · TXT · CSV &nbsp;·&nbsp; ملفات متعددة مدعومة',
+    addMoreBtn:     '＋ إضافة المزيد من الملفات',
+    powerTag:       '⚡ هذا التطبيق مُقدَّم من',
+    searchPlaceholder: 'ابحث برقم الحجز أو اسم الضيف...',
+    sectionDiff:    'اختلافات موجودة',
+    sectionNoHotel: 'في النظام · غير موجود بالفندق',
+    sectionNoSys:   'في الفندق · غير موجود بالنظام',
+    sectionMatch:   'متطابق',
+    badgeMatch:     '✓ متطابق',
+    badgeDiff:      '⚠ يختلف',
+    badgeNoHotel:   '✗ غير موجود بالفندق',
+    badgeNoSys:     '◈ غير موجود بالنظام',
+    exportLabel:    'تصدير:',
+    exportText:     '📄 تقرير نصي',
+    exportExcel:    '📊 إكسل',
+    exportImg:      '🖼 صورة',
+    pending:        'في انتظار التأكيد',
+    hotelLabel:     'ملف(ات) الفندق',
+    hotelTitle:     '🏨 الملف الرئيسي للفندق',
+    sysLabel:       'ملف(ات) النظام',
+    sysTitle:       '🖥 ملفات النظام',
+    addHotel:       '＋ إضافة ملف فندق يدوياً',
+    addSys:         '＋ إضافة ملف نظام يدوياً',
+    pasteHotel:     'أو الصق نص الفندق',
+    pasteSys:       'أو الصق نص النظام',
+    pasteHotelPh:   'الصق نص حجوزات الفندق هنا...',
+    pasteSysPh:     'الصق نص حجوزات النظام هنا...',
+    slotHotelLbl:   'ملف الفندق — انقر أو اسحب وأفلت',
+    slotSysLbl:     'ملف النظام — انقر أو اسحب وأفلت',
+    hotelIdTag:     id => `رقم الفندق: ${id}`,
+    guestNameHotel: 'اسم الضيف (الفندق):',
+    confirmLabel:   'التأكيد:',
+    hotelLabel2:    'الفندق:',
+    diffChipLabel:  (n,ids) => `⚠ ${n} اختلاف: ${ids}`,
+    fieldArrival:   'الوصول', fieldDep:'المغادرة', fieldRooms:'الغرف',
+    fieldRoomType:  'نوع الغرفة',
+    fieldGuestName: 'اسم النزيل',
+    fieldMeal:      'نوع الوجبة',
+    ignorePanelTitle: 'تجاهل التعارض',
+    ignorePanelDesc:  'الحقول المحددة ستُتجاهل — النتائج تُحدَّث فوراً',
+    ignoreArrivalLbl: '📅 تاريخ الوصول',
+    ignoreDepartureLbl: '📅 تاريخ المغادرة',
+    ignoreRoomsLbl:   '🛏 الغرف',
+    ignoreMealLbl:    '🍽 نوع الوجبة',
+    ignoreRoomTypeLbl:'🏠 نوع الغرفة',
+    tblField:       'الحقل', tblSystem:'النظام', tblHotel:'الفندق', tblStatus:'الحالة',
+    statTotal:      'المجموع', statMatch:'متطابق', statDiff:'اختلافات', statNoHotel:'غير موجود بالفندق', statNoSys:'غير موجود بالنظام',
+    chkInclude:     'تضمين:',
+    chkLblMatch:    'متطابق', chkLblNoHotel:'غير موجود بالفندق', chkLblNoSys:'غير موجود بالنظام', chkLblDiff:'اختلافات',
+    resultsTitle:   (sys,htl) => `// ${sys} حجز نظام مقابل ${htl} إيصال فندقي`,
+    alertNoHotel:   (rsv,from,till,rooms) => `⚠ الحجز #${rsv} موجود في النظام لكن غير موجود في ملف الفندق.<br>النظام: ${from} ← ${till} | ${rooms} غرفة`,
+    alertNoSys:     (rsv,from,till,rooms) => `◈ الإيصال ${rsv} موجود في الفندق لكن غير موجود في النظام.<br>الفندق: ${from} ← ${till} | ${rooms} غرفة`,
+    mismatch:       '⚠ غير متطابق',
+    searchCount:    (n,v) => `${n} نتيجة لـ "${v}"`,
+    toastReset:     'تمت إعادة التعيين — جاهز لمقارنة جديدة',
+    toastText:      'تم تنزيل التقرير النصي',
+    toastExcel:     'تم تنزيل ملف Excel',
+    toastImg:       'تم تنزيل الصورة',
+  }
+};
+
+function t(key, ...args) {
+  const T = TRANSLATIONS[currentLang];
+  const val = T[key];
+  if (typeof val === 'function') return val(...args);
+  return val || TRANSLATIONS['en'][key] || key;
+}
+
+function toggleTheme() {
+  const html = document.getElementById('appHtml');
+  const btn  = document.getElementById('themeBtn');
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  btn.textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'ar' : 'en';
+  const html = document.getElementById('appHtml');
+  html.lang = currentLang;
+  html.dir  = currentLang === 'ar' ? 'rtl' : 'ltr';
+  applyTranslations();
+  if (currentResults.length) renderResults();
+}
+
+function applyTranslations() {
+  const T = TRANSLATIONS[currentLang];
+  document.getElementById('mainTitle').innerHTML = T.mainTitle;
+  document.getElementById('mainSubtitle').innerHTML = T.mainSubtitle;
+  document.getElementById('langBtn').textContent = T.langBtn;
+  document.getElementById('btnClear').innerHTML = T.btnClear;
+  const cmpBtn = document.getElementById('compareBtn');
+  if (cmpBtn) cmpBtn.innerHTML = T.compareBtn;
+  const di = document.getElementById('dropTitle');
+  if (di) di.innerHTML = T.dropTitle;
+  const ds = document.getElementById('dropSub');
+  if (ds) ds.textContent = T.dropSub;
+  const df = document.getElementById('dropFormats');
+  if (df) df.innerHTML = T.dropFormats;
+  const sb = document.querySelector('.search-box');
+  if (sb) sb.placeholder = T.searchPlaceholder;
+  const [hl, sl] = document.querySelectorAll('.card-label');
+  if (hl) hl.textContent = T.hotelLabel;
+  if (sl) sl.textContent = T.sysLabel;
+  const [ht, st] = document.querySelectorAll('.card-title');
+  if (ht) ht.textContent = T.hotelTitle;
+  if (st) st.textContent = T.sysTitle;
+  const addBtns = document.querySelectorAll('.add-file-btn');
+  if (addBtns[0]) addBtns[0].textContent = T.addHotel;
+  if (addBtns[1]) addBtns[1].textContent = T.addSys;
+  const hpt = document.querySelector('#hotelPasteToggle span:last-child');
+  if (hpt) hpt.textContent = T.pasteHotel;
+  const spt = document.querySelector('#systemPasteToggle span:last-child');
+  if (spt) spt.textContent = T.pasteSys;
+  const hpa = document.getElementById('hotelPaste');
+  if (hpa) hpa.placeholder = T.pasteHotelPh;
+  const spa = document.getElementById('systemPaste');
+  if (spa) spa.placeholder = T.pasteSysPh;
+  document.querySelectorAll('#hotelSlots .slot-label').forEach(el => el.textContent = T.slotHotelLbl);
+  document.querySelectorAll('#systemSlots .slot-label').forEach(el => el.textContent = T.slotSysLbl);
+  const ipt = document.querySelector('.ignore-panel-title');
+  if (ipt) ipt.textContent = T.ignorePanelTitle;
+  const ipd = document.querySelector('.ignore-panel-desc');
+  if (ipd) ipd.textContent = T.ignorePanelDesc;
+  const ignLabels = document.querySelectorAll('.ignore-chk-label');
+  const ignKeys = [T.ignoreArrivalLbl, T.ignoreDepartureLbl, T.ignoreRoomsLbl, T.ignoreMealLbl, T.ignoreRoomTypeLbl];
+  ignLabels.forEach((el, i) => { if (ignKeys[i]) el.textContent = ignKeys[i]; });
+}
+
+function togglePaste(type) {
+  const section = document.getElementById(type + 'PasteSection');
+  const btn     = document.getElementById(type + 'PasteToggle');
+  section.classList.toggle('visible');
+  btn.classList.toggle('open');
+}
+
+window.addEventListener('load', () => {
+  addHotelSlot();
+  addSystemSlot();
+  initSmartDrop();
+  applyTranslations();
+});
+</script>
+
+<div class="powered-footer">
+  <div class="pf-tag" id="pfTag">⚡ THIS APP IS POWERED BY</div>
+  <div class="pf-name">MR. <span>HUSSIEN ALTANTAWY</span></div>
+  <div class="pf-contacts" dir="ltr" style="unicode-bidi:embed;">
+    <div class="pf-contact" dir="ltr">📱 <a href="tel:+201281806461" dir="ltr">+2 012 81 80 64 61</a></div>
+        <div class="pf-contact" dir="ltr">📧 <a href="mailto:HUSSIEN.ALTANTAWY@YAHOO.COM" dir="ltr" style="text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">HUSSIEN.ALTANTAWY@YAHOO.COM</a></div>
+  </div>
+</div>
+
+</body>
+</html>
