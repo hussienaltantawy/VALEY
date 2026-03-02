@@ -1537,6 +1537,111 @@ function runComparison() {
 
   const sysSet = new Set(Object.keys(sysGrouped));
 
+  // ── POOL-BASED ROOM TYPE MATCHING PER ORIGINAL RSV GROUP ─────────────────────
+  // Build a map: originalRsv → { confNos[], sysTypes[], hotelTypes[] }
+  // Then do greedy best-match pairing so that if the POOL of room types matches,
+  // individual conf#s are re-paired to avoid false mismatches.
+  //
+  // e.g. System RSV 133418 expands to conf#s [158935=TPL, 158934=QU, 158933=QU]
+  //      Hotel records                        [158935=QU,  158934=QU, 158933=DBL]
+  //      Pool sys = [TPL, QU, QU], hotel = [QU, QU, DBL]
+  //      Best pairing: 158934→QU/QU ✓, one QU matches the other QU ✓, TPL↔DBL ✗ (real mismatch)
+  //      The conf# chosen to carry the mismatch is the one whose sys type is unmatched.
+
+  // Step 1: build originalRsv → list of confNos (for expanded Valy records)
+  const confToOrigRsv = {}; // confNo → originalRsv (sysRsv)
+  for (const sys of systemList) {
+    // sysRsv = the original RSV from system file; rsv = the conf# it expanded to
+    const origRsv = sys.sysRsv || sys.rsv;
+    confToOrigRsv[sys.rsv] = origRsv;
+  }
+
+  // Step 2: for each originalRsv group, compute best room-type pairing
+  // Result: confNo → { matchedHotelConfNo, assignedSysType, assignedHotelType }
+  const confRoomTypePairing = {}; // confNo → { sysType, hotelType } after smart pairing
+
+  const origRsvGroups = {}; // origRsv → [confNo, ...]
+  for (const confNo of Object.keys(sysGrouped)) {
+    const orig = confToOrigRsv[confNo] || confNo;
+    if (!origRsvGroups[orig]) origRsvGroups[orig] = [];
+    origRsvGroups[orig].push(confNo);
+  }
+
+  for (const [origRsv, confNos] of Object.entries(origRsvGroups)) {
+    if (confNos.length <= 1) {
+      // Single conf — no pool logic needed, just pass through
+      const confNo = confNos[0];
+      const sys = sysGrouped[confNo];
+      const h   = hotelMap[confNo];
+      confRoomTypePairing[confNo] = {
+        sysType:   sys && sys.roomType ? normalizeRoomType(sys.roomType) : null,
+        hotelType: h   && h.roomType   ? normalizeRoomType(h.roomType)   : null,
+      };
+      continue;
+    }
+
+    // Multi-conf group: collect sys and hotel types with their conf# references
+    const sysPool   = []; // [{confNo, type}]
+    const hotelPool = []; // [{confNo, type}]
+
+    for (const confNo of confNos) {
+      const sys = sysGrouped[confNo];
+      const h   = hotelMap[confNo];
+      if (sys && sys.roomType) sysPool.push({ confNo, type: normalizeRoomType(sys.roomType) });
+      if (h   && h.roomType)   hotelPool.push({ confNo, type: normalizeRoomType(h.roomType) });
+    }
+
+    // Greedy matching: for each sysPool entry, find a hotelPool entry with same type
+    // Priority: exact conf# match first, then any same type
+    const hotelUsed = new Set();
+    const sysMatched = new Map(); // sysConfNo → matched hotelConfNo (or null)
+
+    // Pass 1: match by same conf# AND same type (perfect match)
+    for (const sp of sysPool) {
+      const hp = hotelPool.find(h => !hotelUsed.has(h.confNo) && h.confNo === sp.confNo && h.type === sp.type);
+      if (hp) { sysMatched.set(sp.confNo, hp.confNo); hotelUsed.add(hp.confNo); }
+    }
+
+    // Pass 2: match remaining by same type only (pool match — ignores which conf# holds it)
+    for (const sp of sysPool) {
+      if (sysMatched.has(sp.confNo)) continue;
+      const hp = hotelPool.find(h => !hotelUsed.has(h.confNo) && h.type === sp.type);
+      if (hp) { sysMatched.set(sp.confNo, hp.confNo); hotelUsed.add(hp.confNo); }
+    }
+
+    // Pass 3: unmatched sys entries — pair with any remaining hotel entry (these are real mismatches)
+    const unmatched = sysPool.filter(sp => !sysMatched.has(sp.confNo));
+    const unmatchedHotel = hotelPool.filter(hp => !hotelUsed.has(hp.confNo));
+    for (let i = 0; i < unmatched.length; i++) {
+      const sp = unmatched[i];
+      const hp = unmatchedHotel[i];
+      sysMatched.set(sp.confNo, hp ? hp.confNo : null);
+      if (hp) hotelUsed.add(hp.confNo);
+    }
+
+    // Now assign final pairing results
+    for (const sp of sysPool) {
+      const matchedHotelConfNo = sysMatched.get(sp.confNo);
+      const matchedHotelEntry  = matchedHotelConfNo ? hotelPool.find(h => h.confNo === matchedHotelConfNo) : null;
+      confRoomTypePairing[sp.confNo] = {
+        sysType:   sp.type,
+        hotelType: matchedHotelEntry ? matchedHotelEntry.type : null,
+      };
+    }
+
+    // For conf#s that have no sys type but do have hotel type, just record them
+    for (const confNo of confNos) {
+      if (!confRoomTypePairing[confNo]) {
+        const h = hotelMap[confNo];
+        confRoomTypePairing[confNo] = {
+          sysType:   null,
+          hotelType: h && h.roomType ? normalizeRoomType(h.roomType) : null,
+        };
+      }
+    }
+  }
+  // ─────────────────────────────────────────────────────────────────────────────
+
   for (const [rsv, sys] of Object.entries(sysGrouped)) {
     const h = hotelMap[rsv];
     if (!h) {
@@ -1579,10 +1684,21 @@ function runComparison() {
         }
       }
 
-      // Room Type comparison — only when BOTH sides have room type data
-      if (sys.roomType && h.roomType) {
+      // Room Type comparison — use smart pool-matched types for this conf#
+      const pairing = confRoomTypePairing[rsv];
+      if (pairing && pairing.sysType && pairing.hotelType) {
+        // Store paired display values on sys (will be passed to result)
+        sys._displayRoomType   = pairing.sysType;
+        sys._pairedHotelRoomType = pairing.hotelType;
+        if (pairing.sysType !== pairing.hotelType) {
+          diffs.push({f:'Room Type', sv:pairing.sysType, hv:pairing.hotelType});
+        }
+      } else if (sys.roomType && h.roomType) {
+        // Fallback: direct comparison if pairing not available
+        sys._displayRoomType   = normalizeRoomType(sys.roomType);
+        sys._pairedHotelRoomType = normalizeRoomType(h.roomType);
         if (normalizeRoomType(sys.roomType) !== normalizeRoomType(h.roomType)) {
-          diffs.push({f:'Room Type', sv:sys.roomType, hv:h.roomType});
+          diffs.push({f:'Room Type', sv:normalizeRoomType(sys.roomType), hv:normalizeRoomType(h.roomType)});
         }
       }
 
@@ -1807,8 +1923,8 @@ function buildItem(r) {
     }
 
     // Room Type row — always show if at least one side has data
-    const sysRT  = r.sys.roomType   || null;
-    const hotelRT = r.hotel.roomType || null;
+    const sysRT  = r.sys._displayRoomType || r.sys.roomType   || null;
+    const hotelRT = r.sys._pairedHotelRoomType || r.hotel.roomType || null;
     if (sysRT || hotelRT) {
       compFields.push({
         f: t('fieldRoomType'),
@@ -2118,11 +2234,11 @@ function exportExcel() {
       const sFrom  = r.sys   ? r.sys.from   : '';
       const sTill  = r.sys   ? r.sys.till   : '';
       const sRooms = r.sys   ? r.sys.rooms  : '';
-      const sRT    = r.sys   ? (r.sys.roomType || '') : '';
+      const sRT    = r.sys   ? (r.sys._displayRoomType || r.sys.roomType || '') : '';
       const hFrom  = r.hotel ? r.hotel.from : '';
       const hTill  = r.hotel ? r.hotel.till : '';
       const hRooms = r.hotel ? r.hotel.rooms : '';
-      const hRT    = r.hotel ? (r.hotel.roomType || '') : '';
+      const hRT    = r.sys   ? (r.sys._pairedHotelRoomType || (r.hotel ? r.hotel.roomType : '') || '') : (r.hotel ? (r.hotel.roomType || '') : '');
       const hGuest = r.hotel ? (r.hotel.name || '') : '';
       const diffFields = r.diffs ? r.diffs.map(d=>d.f).join('; ') : '';
       dataRows.push([rsv,guest,hGuest,hotel,status,sFrom,hFrom,sTill,hTill,sRooms,hRooms,sRT,hRT,diffFields,htlId]);
@@ -2644,9 +2760,4 @@ window.addEventListener('load', () => {
   <div class="pf-name">MR. <span>HUSSIEN ALTANTAWY</span></div>
   <div class="pf-contacts" dir="ltr" style="unicode-bidi:embed;">
     <div class="pf-contact" dir="ltr">📱 <a href="tel:+201281806461" dir="ltr">+2 012 81 80 64 61</a></div>
-        <div class="pf-contact" dir="ltr">📧 <a href="mailto:HUSSIEN.ALTANTAWY@YAHOO.COM" dir="ltr" style="text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">HUSSIEN.ALTANTAWY@YAHOO.COM</a></div>
-  </div>
-</div>
-
-</body>
-</html>
+    <div class="pf-contact" dir="ltr">📧 <a href="mailto:HUSSIEN.ALTANTAWY@YAHOO.COM" dir="ltr" style="text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">HUSSIEN.ALTANTAWY@YAHOO.COM</a></div>
