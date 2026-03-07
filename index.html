@@ -278,6 +278,23 @@
   .v-diff { color: var(--yellow); font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
   .v-na { color: var(--muted2); font-family: 'IBM Plex Mono', monospace; font-style: italic; }
   .alert-msg { font-size: 0.79rem; padding: 9px 0 2px; font-family: 'IBM Plex Mono', monospace; line-height: 1.6; }
+  .missing-conf-warn {
+    display: flex; align-items: center; gap: 9px;
+    margin-top: 10px;
+    background: rgba(255, 152, 0, 0.10);
+    border: 1.5px solid rgba(255, 152, 0, 0.55);
+    border-left: 4px solid #ff9800;
+    border-radius: 8px;
+    padding: 9px 13px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: #ff9800;
+    font-weight: 600;
+  }
+  .missing-conf-warn .warn-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .missing-conf-warn .warn-text { flex: 1; line-height: 1.55; }
+  .missing-conf-warn .warn-text b { color: #ffb74d; }
+  [data-theme="dark"] .missing-conf-warn { background: rgba(255,152,0,0.08); border-color: rgba(255,152,0,0.50); color: #ffb74d; }
   .alert-msg.red { color: var(--red); }
   .alert-msg.purple { color: var(--teal); }
   .meta-row { font-size: 0.72rem; color: var(--muted); margin-top: 7px; }
@@ -1390,6 +1407,12 @@ function parseSystemText(text) {
     // ── MADINAH VALLEY: expand per 6-digit conf no ────────────────────────────
     if (isValyFile) {
       const confNos = [...rest.matchAll(/\b(1\d{5})\b/g)].map(m2 => m2[1]);
+      // ── ROOMS MISMATCH WARNING: declared rooms vs actual conf#s found ────────
+      // e.g. system says "40 - QUAD" but only 39 conf numbers appear in the PDF
+      const declaredRooms = rooms || 0;
+      const confCount     = confNos.length;
+      const missingConfs  = (declaredRooms > 0 && confCount > 0 && confCount < declaredRooms)
+        ? declaredRooms - confCount : 0;
       if (confNos.length === 0) {
         out.push({ rsv, from, till, rooms, guest, hotel, htlRsv: 'sent', meal, roomType, sysRsv: rsv, roomTypeBreakdown });
       } else {
@@ -1408,7 +1431,7 @@ function parseSystemText(text) {
               bdUsed++;
             }
           }
-          out.push({ rsv: confNo, from, till, rooms: 1, guest, hotel, htlRsv: confNo, meal, roomType: assignedType, sysRsv: rsv, roomTypeBreakdown });
+          out.push({ rsv: confNo, from, till, rooms: 1, guest, hotel, htlRsv: confNo, meal, roomType: assignedType, sysRsv: rsv, roomTypeBreakdown, missingConfs, declaredRooms, confCount });
         }
       }
       continue;
@@ -1572,6 +1595,12 @@ function runComparison() {
       if (sys.meal && sys.meal !== 'Room Only') sysGrouped[sys.rsv].meal = sys.meal;
       // Keep roomType from first record that has one
       if (!sysGrouped[sys.rsv].roomType && sys.roomType) sysGrouped[sys.rsv].roomType = sys.roomType;
+      // Keep missingConfs warning from first record that has one
+      if (!sysGrouped[sys.rsv].missingConfs && sys.missingConfs) {
+        sysGrouped[sys.rsv].missingConfs  = sys.missingConfs;
+        sysGrouped[sys.rsv].declaredRooms = sys.declaredRooms;
+        sysGrouped[sys.rsv].confCount     = sys.confCount;
+      }
     }
   }
 
@@ -1682,6 +1711,30 @@ function runComparison() {
   }
   // ─────────────────────────────────────────────────────────────────────────────
 
+  // ── Inject synthetic "Not in Hotel" cards for missing conf#s in system PDF ──
+  // e.g. system RSV 128340 says 40 rooms but only 39 conf#s printed → create 1 ghost card
+  const seenOrigRsvs = new Set();
+  for (const [rsv, sys] of Object.entries(sysGrouped)) {
+    const origRsv = sys.sysRsv || rsv;
+    if (sys.missingConfs && sys.missingConfs > 0 && !seenOrigRsvs.has(origRsv)) {
+      seenOrigRsvs.add(origRsv);
+      for (let mi = 0; mi < sys.missingConfs; mi++) {
+        // Create a ghost record — conf# unknown, shown as "MISSING"
+        const ghostSys = {
+          ...sys,
+          rsv: origRsv,
+          guest: sys.guest || origRsv,
+          _isMissingConf: true,
+          _missingIndex: mi + 1,
+          _totalMissing: sys.missingConfs,
+          _declaredRooms: sys.declaredRooms,
+          _confCount: sys.confCount,
+        };
+        results.push({ status:'nohotel', sys: ghostSys, hotel: null, diffs: [], _isMissingConf: true });
+      }
+    }
+  }
+
   for (const [rsv, sys] of Object.entries(sysGrouped)) {
     const h = hotelMap[rsv];
     if (!h) {
@@ -1693,8 +1746,14 @@ function runComparison() {
       if (sys.rooms !== h.rooms) diffs.push({f:'Rooms',     sv:sys.rooms, hv:h.rooms});
       // Guest name comparison — only when BOTH sides have real data
       if (sys.guest && h.name) {
-        const sysGN = sys.guest.trim().toUpperCase();
-        const htlGN = h.name.trim().toUpperCase();
+        // Normalize: uppercase, remove hyphens/slashes/digits used as separators
+        // e.g. "Al-Khatlan" → "ALKHATLAN", "Al/Khatlan" → "ALKHATLAN", "Room1" → "ROOM"
+        const normalizeName = s => s.trim().toUpperCase()
+          .replace(/[-\/]+/g, '')      // remove hyphens and slashes (Al-Khatlan → ALKHATLAN)
+          .replace(/\d+/g, '')     // remove standalone numbers (e.g. "1" between names)
+          .replace(/\s+/g, ' ').trim();
+        const sysGN = normalizeName(sys.guest);
+        const htlGN = normalizeName(h.name);
 
         // Rule 1: Skip if system guest is just the RSV number (failed parse)
         const isRsvFallback = /^\d+$/.test(sysGN);
@@ -1952,7 +2011,9 @@ function buildItem(r) {
   const bm = {match:'bd-match',diff:'bd-diff',nohotel:'bd-nohotel',nosys:'bd-nosys'};
   const bt = {match:t('badgeMatch'), diff:t('badgeDiff'), nohotel:t('badgeNoHotel'), nosys:t('badgeNoSys')};
   const rsv   = r.status==='nosys' ? r.rsv : r.sys.rsv;
-  const guest = r.status==='nosys' ? (r.hotel.name || r.rsv) : r.sys.guest;
+  const guest = r._isMissingConf
+    ? `⚠ MISSING CONF# (RSV ${r.sys.rsv})`
+    : (r.status==='nosys' ? (r.hotel.name || r.rsv) : r.sys.guest);
   const is6digit = /^\d{6}$/.test(rsv);
   const displayRsv = rsv.startsWith('HID-')
     ? '🏨 Hotel ID: ' + rsv.replace('HID-','')
@@ -1972,8 +2033,23 @@ function buildItem(r) {
 
   let body = '';
   if (r.status==='nohotel') {
-    const rtInfo = r.sys.roomType ? ` | ${r.sys.roomType}` : '';
-    body = `<div class="alert-msg red">${t('alertNoHotel', rsv, r.sys.from, r.sys.till, r.sys.rooms)}${rtInfo}</div>`;
+    // ── Ghost card: conf# missing from system PDF ──────────────────────────
+    if (r._isMissingConf && r.sys._isMissingConf) {
+      const declared = r.sys._declaredRooms;
+      const found    = r.sys._confCount;
+      const missing  = r.sys._totalMissing;
+      body = `<div class="missing-conf-warn" style="margin-top:0;">
+        <span class="warn-icon">⚠️</span>
+        <span class="warn-text">
+          <b>SYSTEM PDF MISSING CONF# — ${missing} ROOM(S) NOT LISTED</b><br>
+          System declared <b>${declared} rooms</b> but only <b>${found} confirmation numbers</b> appear in the PDF.<br>
+          Re-export the system report to get the missing conf number(s).
+        </span>
+      </div>`;
+    } else {
+      const rtInfo = r.sys.roomType ? ` | ${r.sys.roomType}` : '';
+      body = `<div class="alert-msg red">${t('alertNoHotel', rsv, r.sys.from, r.sys.till, r.sys.rooms)}${rtInfo}</div>`;
+    }
   } else if (r.status==='nosys') {
     const rtInfo = r.hotel.roomType ? ` | ${r.hotel.roomType}` : '';
     body = `<div class="alert-msg purple">${t('alertNoSys', rsv, r.hotel.from, r.hotel.till, r.hotel.rooms)}${rtInfo}</div>`;
@@ -2031,6 +2107,23 @@ function buildItem(r) {
     }
 
     body += '</tbody></table>';
+
+    // ── MISSING CONF# WARNING ──────────────────────────────────────────────────
+    // Show when system PDF declared more rooms than conf numbers it actually printed
+    const sysMissing = r.sys && r.sys.missingConfs;
+    if (sysMissing) {
+      const declared = r.sys.declaredRooms;
+      const found    = r.sys.confCount;
+      body += `<div class="missing-conf-warn">
+        <span class="warn-icon">⚠️</span>
+        <span class="warn-text">
+          <b>SYSTEM PDF MISSING CONF# — ${sysMissing} ROOM(S) NOT LISTED</b><br>
+          System declared <b>${declared} rooms</b> but only <b>${found} confirmation numbers</b> appear in the PDF.<br>
+          Re-export the system report to get the missing conf number(s).
+        </span>
+      </div>`;
+    }
+
     if (r.hotel && r.hotel.name)    body += `<div class="meta-row">${t('guestNameHotel')} <span>${r.hotel.name}</span></div>`;
     if (r.hotel && r.hotel.roomNo)  body += `<div class="meta-row">Room No: <span>${r.hotel.roomNo}</span></div>`;
     if (r.hotel && r.hotel.checkin) body += `<div class="meta-row">Checked In: <span>${r.hotel.checkin}</span></div>`;
@@ -2840,8 +2933,8 @@ window.addEventListener('load', () => {
   <div class="pf-tag" id="pfTag">⚡ THIS APP IS POWERED BY</div>
   <div class="pf-name">MR. <span>HUSSIEN ALTANTAWY</span></div>
   <div class="pf-contacts" dir="ltr" style="unicode-bidi:embed;">
-    <div class="pf-contact" dir="ltr">📱 <a href="tel:+201281806461" dir="ltr">+2 012 81 80 64 61</a></div>
-    <div class="pf-contact" dir="ltr">📧 <a href="mailto:HUSSIEN.ALTANTAWY@YAHOO.COM" dir="ltr" style="text-transform:uppercase;font-weight:600;">HUSSIEN.ALTANTAWY@YAHOO.COM</a></div>
+    <div class="pf-contact" dir="ltr">&#x1F4F1; <a href="tel:+201281806461" dir="ltr">+2 012 81 80 64 61</a></div>
+    <div class="pf-contact" dir="ltr">&#x1F4E7; <span style="text-transform:uppercase;font-weight:600;color:var(--muted);font-family:'IBM Plex Mono',monospace;">HUSSIEN.ALTANTAWY&#64;YAHOO.COM</span></div>
   </div>
 </div>
 </div>
