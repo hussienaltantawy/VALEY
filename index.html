@@ -1451,7 +1451,24 @@ function getIgnoreFlags() {
 
 function applyIgnoreFlagsAndRender() {
   const ign = getIgnoreFlags();
+  // Helper: parse DD/MM/YYYY → Date
+  const parseDateDMY = s => { const [dd,mm,yy] = (s||'').split('/'); return new Date(+yy, +mm-1, +dd); };
   currentResults = rawResults.map(r => {
+    // If "Ignore Arrival Before Date" is active, hide nohotel AND nosys records
+    // whose arrival date is before the chosen cutoff
+    if (ign.arrivalBefore && ign.arrivalBeforeDate) {
+      const cutoff = new Date(ign.arrivalBeforeDate);
+      // nohotel: record exists in system but not hotel — use system arrival
+      if (r.status === 'nohotel') {
+        const sysArrival = parseDateDMY(r.sys && r.sys.from);
+        if (!isNaN(sysArrival) && !isNaN(cutoff) && sysArrival < cutoff) return null;
+      }
+      // nosys: record exists in hotel but not system — use hotel arrival
+      if (r.status === 'nosys') {
+        const hotelArrival = parseDateDMY(r.hotel && r.hotel.from);
+        if (!isNaN(hotelArrival) && !isNaN(cutoff) && hotelArrival < cutoff) return null;
+      }
+    }
     if (r.status === 'nohotel' || r.status === 'nosys') return r;
     const visibleDiffs = (r._allDiffs || []).filter(d => {
       if (ign.arrival   && d.f === 'Arrival')    return false;
@@ -1471,6 +1488,7 @@ function applyIgnoreFlagsAndRender() {
     });
     return { ...r, diffs: visibleDiffs, status: visibleDiffs.length ? 'diff' : 'match' };
   });
+  currentResults = currentResults.filter(r => r !== null);
   renderResults();
 }
 
