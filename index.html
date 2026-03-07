@@ -921,6 +921,17 @@
       <span class="ignore-chk-label">👤 Guest Name</span>
     </label>
   </div>
+  <div class="ignore-before-row" style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <label class="ignore-chk-group" style="margin-bottom:0;">
+      <input type="checkbox" id="ignoreArrivalBefore" onchange="rerunIfHasResults()">
+      <span class="ignore-chk-box"></span>
+      <span class="ignore-chk-label">📅 Ignore Arrival Mismatch Before</span>
+    </label>
+    <input type="date" id="ignoreArrivalBeforeDate"
+      onchange="rerunIfHasResults()"
+      style="background:rgba(255,152,0,0.06);border:1.5px solid rgba(255,152,0,0.40);border-radius:6px;padding:4px 10px;font-size:0.76rem;font-family:'IBM Plex Mono',monospace;color:var(--text);outline:none;cursor:pointer;transition:border-color .2s;"
+      title="Ignore arrival date mismatches where the hotel arrival is before this date">
+  </div>
 </div>
 <button class="compare-btn" onclick="runComparison()" id="compareBtn" data-en="⚡ Run Comparison" data-ar="⚡ تشغيل المقارنة">⚡ Run Comparison</button>
 <div id="results"></div>
@@ -1424,13 +1435,17 @@ function ymd(s) { const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; }
 
 // ── IGNORE MISMATCH FLAGS ─────────────────────────────────────────────────────
 function getIgnoreFlags() {
+  const arrBeforeEl     = document.getElementById('ignoreArrivalBefore');
+  const arrBeforeDateEl = document.getElementById('ignoreArrivalBeforeDate');
   return {
-    arrival:   document.getElementById('ignoreArrival')   ? document.getElementById('ignoreArrival').checked   : false,
-    departure: document.getElementById('ignoreDeparture') ? document.getElementById('ignoreDeparture').checked : false,
-    rooms:     document.getElementById('ignoreRooms')     ? document.getElementById('ignoreRooms').checked     : false,
-    meal:      document.getElementById('ignoreMeal')      ? document.getElementById('ignoreMeal').checked      : false,
-    guestName: document.getElementById('ignoreGuestName') ? document.getElementById('ignoreGuestName').checked : false,
-    roomType:  document.getElementById('ignoreRoomType')  ? document.getElementById('ignoreRoomType').checked  : false,
+    arrival:           document.getElementById('ignoreArrival')   ? document.getElementById('ignoreArrival').checked   : false,
+    departure:         document.getElementById('ignoreDeparture') ? document.getElementById('ignoreDeparture').checked : false,
+    rooms:             document.getElementById('ignoreRooms')     ? document.getElementById('ignoreRooms').checked     : false,
+    meal:              document.getElementById('ignoreMeal')      ? document.getElementById('ignoreMeal').checked      : false,
+    guestName:         document.getElementById('ignoreGuestName') ? document.getElementById('ignoreGuestName').checked : false,
+    roomType:          document.getElementById('ignoreRoomType')  ? document.getElementById('ignoreRoomType').checked  : false,
+    arrivalBefore:     arrBeforeEl     ? arrBeforeEl.checked   : false,
+    arrivalBeforeDate: arrBeforeDateEl ? arrBeforeDateEl.value : '',
   };
 }
 
@@ -1440,6 +1455,13 @@ function applyIgnoreFlagsAndRender() {
     if (r.status === 'nohotel' || r.status === 'nosys') return r;
     const visibleDiffs = (r._allDiffs || []).filter(d => {
       if (ign.arrival   && d.f === 'Arrival')    return false;
+      // Ignore arrival mismatch when hotel arrival is before the chosen cutoff date
+      if (ign.arrivalBefore && ign.arrivalBeforeDate && d.f === 'Arrival') {
+        const parseDateDMY = s => { const [dd,mm,yy] = (s||'').split('/'); return new Date(+yy, +mm-1, +dd); };
+        const cutoff       = new Date(ign.arrivalBeforeDate);
+        const hotelArrival = parseDateDMY(d.hv);
+        if (!isNaN(hotelArrival) && !isNaN(cutoff) && hotelArrival < cutoff) return false;
+      }
       if (ign.departure && d.f === 'Departure')  return false;
       if (ign.rooms     && d.f === 'Rooms')      return false;
       if (ign.meal      && d.f === 'Meal Plan')  return false;
@@ -1679,7 +1701,44 @@ function runComparison() {
         // All words of shorter name must exist in longer name (subset match)
         const isSubsetMatch = shorter.length > 0 && shorter.every(w => longerSet.has(w));
 
-        if (!isRsvFallback && !eitherIsGroup && !isSubsetMatch && sysGN !== htlGN) {
+        // Rule 4: Fuzzy per-word match — handles Arabic name transliteration variants
+        // e.g. "MOHAMMED" vs "MOHAMED", "HUSSIEN" vs "HUSSEIN", "ABDALLAH" vs "ABDULLAH"
+        // Two words are fuzzy-equal if their Levenshtein edit distance is small relative
+        // to their length: ≤1 edit for words up to 5 chars, ≤2 edits for 6+ chars.
+        function levenshtein(a, b) {
+          if (a === b) return 0;
+          if (!a.length) return b.length;
+          if (!b.length) return a.length;
+          const dp = Array.from({length: b.length + 1}, (_, i) => i);
+          for (let i = 1; i <= a.length; i++) {
+            let prev = i;
+            for (let j = 1; j <= b.length; j++) {
+              const val = a[i-1] === b[j-1] ? dp[j-1] : 1 + Math.min(dp[j-1], dp[j], prev);
+              dp[j-1] = prev;
+              prev = val;
+            }
+            dp[b.length] = prev;
+          }
+          return dp[b.length];
+        }
+        function wordsFuzzyMatch(w1, w2) {
+          if (w1 === w2) return true;
+          const maxDist = Math.max(w1.length, w2.length) >= 6 ? 2 : 1;
+          return levenshtein(w1, w2) <= maxDist;
+        }
+        // Every word in the shorter name must fuzzy-match a distinct word in the longer name
+        function isFuzzySubsetMatch(shortArr, longArr) {
+          if (shortArr.length === 0) return false;
+          const used = new Array(longArr.length).fill(false);
+          return shortArr.every(sw => {
+            const idx = longArr.findIndex((lw, i) => !used[i] && wordsFuzzyMatch(sw, lw));
+            if (idx !== -1) { used[idx] = true; return true; }
+            return false;
+          });
+        }
+        const isFuzzyMatch = isFuzzySubsetMatch(shorter, longer);
+
+        if (!isRsvFallback && !eitherIsGroup && !isSubsetMatch && !isFuzzyMatch && sysGN !== htlGN) {
           diffs.push({f:'Guest Name', sv:sys.guest, hv:h.name});
         }
       }
@@ -2589,6 +2648,7 @@ const TRANSLATIONS = {
     ignoreRoomsLbl:   '🛏 Rooms',
     ignoreMealLbl:    '🍽 Meal Plan',
     ignoreRoomTypeLbl:'🏠 Room Type',
+    ignoreArrivalBeforeLbl:'📅 Ignore Arrival Mismatch Before',
     tblField:       'Field', tblSystem:'System', tblHotel:'Hotel', tblStatus:'Status',
     statTotal:      'Total', statMatch:'Matched', statDiff:'Differences', statNoHotel:'Not in Hotel', statNoSys:'Not in System',
     chkInclude:     'Include:',
@@ -2656,6 +2716,7 @@ const TRANSLATIONS = {
     ignoreRoomsLbl:   '🛏 الغرف',
     ignoreMealLbl:    '🍽 نوع الوجبة',
     ignoreRoomTypeLbl:'🏠 نوع الغرفة',
+    ignoreArrivalBeforeLbl:'📅 تجاهل اختلاف الوصول قبل',
     tblField:       'الحقل', tblSystem:'النظام', tblHotel:'الفندق', tblStatus:'الحالة',
     statTotal:      'المجموع', statMatch:'متطابق', statDiff:'اختلافات', statNoHotel:'غير موجود بالفندق', statNoSys:'غير موجود بالنظام',
     chkInclude:     'تضمين:',
@@ -2738,6 +2799,8 @@ function applyTranslations() {
   const ignLabels = document.querySelectorAll('.ignore-chk-label');
   const ignKeys = [T.ignoreArrivalLbl, T.ignoreDepartureLbl, T.ignoreRoomsLbl, T.ignoreMealLbl, T.ignoreRoomTypeLbl];
   ignLabels.forEach((el, i) => { if (ignKeys[i]) el.textContent = ignKeys[i]; });
+  const ignBeforeLabel = document.querySelector('.ignore-before-row .ignore-chk-label');
+  if (ignBeforeLabel && T.ignoreArrivalBeforeLbl) ignBeforeLabel.textContent = T.ignoreArrivalBeforeLbl;
 }
 
 function togglePaste(type) {
@@ -2760,4 +2823,9 @@ window.addEventListener('load', () => {
   <div class="pf-name">MR. <span>HUSSIEN ALTANTAWY</span></div>
   <div class="pf-contacts" dir="ltr" style="unicode-bidi:embed;">
     <div class="pf-contact" dir="ltr">📱 <a href="tel:+201281806461" dir="ltr">+2 012 81 80 64 61</a></div>
-    <div class="pf-contact" dir="ltr">📧 <a href="mailto:HUSSIEN.ALTANTAWY@YAHOO.COM" dir="ltr" style="text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">HUSSIEN.ALTANTAWY@YAHOO.COM</a></div>
+    <div class="pf-contact" dir="ltr">📧 <a href="mailto:HUSSIEN.ALTANTAWY@YAHOO.COM" dir="ltr" style="text-transform:uppercase;font-weight:600;">HUSSIEN.ALTANTAWY@YAHOO.COM</a></div>
+  </div>
+</div>
+</div>
+</body>
+</html>
